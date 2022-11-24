@@ -22,7 +22,7 @@ console.log(categories);
         </h1>
         <div className="flex justify-between">
           {categories.map((Category) => (
-            <CategoryCard Category={Category}></CategoryCard>
+            <CategoryCard key={Category?.id} Category={Category}></CategoryCard>
           ))}
         </div>
         {/* <div>

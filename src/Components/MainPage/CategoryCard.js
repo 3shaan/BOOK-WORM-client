@@ -1,14 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CategoryCard = ({ Category }) => {
+  const { name, img, color, _id} = Category;
   return (
     <div className="mb-10">
-      <div className={`card w-96 h-44  shadow-xl ${Category?.color}`}>
-        <div className="card-body">
-          <img className="w-24 mx-auto" src={Category?.img} alt="" />
-          <h2 className="text-center text-xl text-white">{Category?.name}</h2>
+      <Link to={`/category/${name}`}>
+        <div
+          className={`card w-96 h-44  shadow-xl ${
+            color ? color : "bg-green-700"
+          } transform hover:-translate-y-1`}
+        >
+          <div className="card-body">
+            <img className="w-24 mx-auto" src={img} alt="" />
+            <h2 className="text-center text-xl text-white">{name}</h2>
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
