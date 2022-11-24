@@ -1,29 +1,128 @@
-import React from 'react';
+import axios from "axios";
+import React, { useContext } from "react";
+import { authContext } from "../../Context/Context";
+import toast from "react-hot-toast";
 
-const BuyModal = ({isOpen, setOpen}) => {
-    return (
-      <div>
-        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-        <div className={`modal ${isOpen && "modal-open"}`}>
-          <div className="modal-box relative">
-            <label
-              onClick={() => setOpen(false)}
-              htmlFor="my-modal-3"
-              className="btn btn-sm btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">
-              Congratulations random Internet user!
-            </h3>
-            <p className="py-4">
-              You've been selected for a chance to get one year of subscription
-              to use Wikipedia for free!
-            </p>
-          </div>
+
+const BuyModal = ({ isOpen, setOpen, book }) => {
+    const { price, title , _id, images} = book;
+    const { user } = useContext(authContext);
+console.log(images[0])
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        const phone = event.target.phone.value;
+        const meeting_location = event.target.location.value;
+        const buyProduct = {
+          productName: title,
+          ProductPrice: price,
+          BuyerEmail: user?.email,
+          buyerPhone: phone,
+          buyerLocation: meeting_location,
+          ProductId: _id,
+          ProductImg: images[0],
+        };
+        axios.post("http://localhost:5000/buy", {
+            buyProduct
+        })
+            .then(data => {
+                console.log(data)
+                if (data?.data?.acknowledged === true) {
+                    toast.success('Product buy complete')
+                }
+            })
+            .catch(err => console.log(err));
+    }
+  return (
+    <div>
+      <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+      <div className={`modal ${isOpen && "modal-open"}`}>
+        <div className="modal-box relative  lg:w-7/12 max-w-5xl">
+          <label
+            onClick={() => setOpen(false)}
+            htmlFor="my-modal-3"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            ✕
+          </label>
+          <h1 className="text-xl text-center font-semibold mb-5">
+            For buy this Product submit this form
+          </h1>
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-col-1 lg:grid-cols-2">
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="text"
+                  defaultValue={user?.email}
+                  disabled
+                  placeholder="Email"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Item Name</span>
+                </label>
+                <input
+                  type="text"
+                  defaultValue={title}
+                  disabled
+                  placeholder="Item"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Price</span>
+                </label>
+                <input
+                  type="text"
+                  defaultValue={`${price} TK`}
+                  disabled
+                  placeholder="Price"
+                  className="input input-bordered w-full max-w-xs"
+                />
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Phone Number</span>
+                </label>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  required
+                  className="input input-bordered focus:border-red-600 w-full max-w-xs"
+                />
+              </div>
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Meeting Location</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  name="location"
+                  placeholder="Location"
+                  className="input input-bordered focus:border-red-600  w-full max-w-xs"
+                />
+              </div>
+            </div>
+            <div>
+              <input
+                type="submit"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-full mt-10 "
+                value={"Buy The Product"}
+              />
+            </div>
+          </form>
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default BuyModal;

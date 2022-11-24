@@ -17,12 +17,14 @@ const Login = () => {
 
     axios.get(`http://localhost:5000/users?email=${email}`)
       .then(data => {
-        console.log(data?.data?.email)
-        const storedEmail = data?.data?.email;
+        const storedEmail =data?.data?.result?.email;
+        console.log(data?.data?.token);
+        console.log(data?.data?.result?.email);
         if (storedEmail === email) {
           login(email, password)
             .then((result) => {
-              console.log(result?.user);
+              console.log(result);
+              localStorage.setItem("token", data?.data?.token);
               toast.success('login successfully');
               navigate(from, {replace:true})
             })

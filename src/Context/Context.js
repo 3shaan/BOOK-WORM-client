@@ -40,7 +40,9 @@ const Context = ({ children }) => {
     const logOut = () => {
         return (
             signOut(auth)
-                .then(() => { })
+                .then(() => { 
+                    localStorage.removeItem('token')
+                })
                 .catch(err => console.log(err))
         )
     }

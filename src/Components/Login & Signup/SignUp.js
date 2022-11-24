@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authContext } from "../../Context/Context";
 import { async } from "@firebase/util";
@@ -9,7 +9,8 @@ import toast from "react-hot-toast";
 
 const SignUp = () => {
     const { emailSignIn } = useContext(authContext);
-    const [isError, setIsError] = useState('');
+  const [isError, setIsError] = useState('');
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,12 +25,14 @@ const SignUp = () => {
                 axios.post("http://localhost:5000/users", {
                     data
                 })
-                    .then(user => {
-                        if (user.statusText === 'OK') {
-                            toast.success('Sign up successful')
-                        }
-                        console.log(user);
-                    })
+                  .then(user => {
+                    if (user?.data?.result?.acknowledged === true) {
+                      toast.success('Sign up successful');
+                      localStorage.setItem('token', user?.data?.token);
+                      navigate('/',{replace:true})
+                    }
+                    console.log(user);
+                  })
                     .catch(err => {
                         console.log(err);
                         setIsError(err.message)

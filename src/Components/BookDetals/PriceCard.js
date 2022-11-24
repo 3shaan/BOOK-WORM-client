@@ -4,7 +4,7 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { BsFillPersonFill } from "react-icons/bs";
 
 const PriceCard = ({ book }) => {
-  const { seller_location, currier, post_time, seller_name } = book;
+  const { seller_location, currier, post_time, seller_name , sold} = book;
 
   return (
     <div className="bg-slate-200 px-5 py-3 rounded-lg w-80 text-lg space-y-4 font-semibold h-96">
@@ -18,15 +18,16 @@ const PriceCard = ({ book }) => {
         <GoLocation className="text-xl"></GoLocation>
         {seller_location}, Bangladesh
       </h1>
-        <p className="flex gap-3 items-center">
-          <CiDeliveryTruck className="text-2xl"></CiDeliveryTruck>{" "}
-          <span >Currier : </span>
-          {currier ? "Available" : "Unavailable"}
-        </p>
-        
-  
+      <p className="flex gap-3 items-center">
+        <CiDeliveryTruck className="text-2xl"></CiDeliveryTruck>{" "}
+        <span>Currier : </span>
+        {currier ? "Available" : "Unavailable"}
+      </p>
+
       <p>Posted On : {post_time.slice(0, 10)}</p>
-      <p>Product : Available</p>
+      <p>
+        Product : <span className="bg-red-600 rounded-lg px-2 text-white">{sold ? "Sold" : "Available"}</span>
+      </p>
     </div>
   );
 };

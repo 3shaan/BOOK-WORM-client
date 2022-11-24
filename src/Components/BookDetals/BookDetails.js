@@ -20,7 +20,7 @@ const BookDetails = () => {
         <div className="w-full">
           <BookDesc book={book}></BookDesc>
         </div>
-        <BuyModal isOpen={isOpen} setOpen={setOpen}></BuyModal>
+        <BuyModal isOpen={isOpen} setOpen={setOpen} book={book}></BuyModal>
       </div>
     );
 };
