@@ -1,18 +1,42 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { authContext } from "../../Context/Context";
+import { async } from "@firebase/util";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
+    const { emailSignIn } = useContext(authContext);
+    const [isError, setIsError] = useState('');
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit =  (data) => {
         console.log(data);
+        emailSignIn(data?.email, data?.password)
+            .then(result => {
+                
+                axios.post("http://localhost:5000/users", {
+                    data
+                })
+                    .then(user => {
+                        if (user.statusText === 'OK') {
+                            toast.success('Sign up successful')
+                        }
+                        console.log(user);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        setIsError(err.message)
+                })
+            })
+        .catch(err=>setIsError(err.message))
+        
   };
   return (
     <section>
@@ -26,13 +50,13 @@ const SignUp = () => {
             />
           </div>
           <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-            <div className="flex flex-row items-center justify-center lg:justify-start">
+            <div className="flex flex-row items-center justify-center lg:justify-start space-x-1">
               <p className="text-lg mb-0 mr-4">Sign up with</p>
               <button
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="inline-block p-3 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out mx-1 hover:-translate-y-1"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
               >
                 <FaGoogle className="text-lg"></FaGoogle>
               </button>
@@ -41,7 +65,7 @@ const SignUp = () => {
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className=" inline-block p-3 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out mx-1 hover:-translate-y-1"
+                className=" btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
               >
                 <FaFacebookF className="text-lg"></FaFacebookF>
               </button>
@@ -50,7 +74,7 @@ const SignUp = () => {
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="inline-block p-3 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out mx-1 hover:-translate-y-1"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
               >
                 <FaGithub className="text-lg"></FaGithub>
               </button>
@@ -97,12 +121,13 @@ const SignUp = () => {
                 {errors.password && (
                   <span className="text-red-500">Password is required</span>
                 )}
+                {isError && <span className="text-red-500">{isError}</span>}
               </div>
 
               <div className="flex gap-5 items-center mb-6">
                 <p className="text-lg font-semibold">What are you?</p>
                 <select
-                  {...register("option", { required: true })}
+                  {...register("type", { required: true })}
                   className="select select-bordered w-full max-w-xs"
                   required
                 >
@@ -114,8 +139,8 @@ const SignUp = () => {
               <div className="text-center lg:text-left">
                 <input
                   type="Submit"
-                  className="inline-block px-7 py-3 bg-red-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
-                  value={"Login"}
+                  className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32"
+                  value={"Sign up"}
                   readOnly
                 />
 

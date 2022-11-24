@@ -7,7 +7,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import Context from './Context/Context';
+import { Toaster } from "react-hot-toast";
 TimeAgo.addDefaultLocale(en);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();
@@ -16,6 +18,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Context>
         <App />
+        <Toaster />
       </Context>
     </QueryClientProvider>
   </React.StrictMode>

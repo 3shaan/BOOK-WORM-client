@@ -1,6 +1,6 @@
 import React from "react";
 
-const BooksInfo = ({ book }) => {
+const BooksInfo = ({ book, setOpen }) => {
   const {
     post_time,
     title,
@@ -25,7 +25,11 @@ const BooksInfo = ({ book }) => {
         <p>Original Price : ৳ {Original_price} </p>
         <p>Used : {uses}</p>
         <div className="flex gap-10 pt-10">
-          <button className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full">
+          <button
+            htmlFor="my-modal-3"
+            onClick={() => setOpen(true)}
+            className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
+          >
             Buy Now
           </button>
           <button className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full">

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { authContext } from '../../Context/Context';
 import logo from '../../images/logo.png'
 
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logOut } = useContext(authContext);
 
     return (
       <div>
@@ -62,26 +64,41 @@ const Header = () => {
               </li>
             </ul>
             <ul class=" items-center hidden space-x-8 lg:flex">
-              <li>
-                <Link
-                 to="/login"
-                  class="btn border-red-600 inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition rounded shadow-md bg-red-600 text-white hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                  aria-label=" Login"
-                  title=" Login"
-                >
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/signup"
-                  class="btn border-red-600 inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition rounded shadow-md bg-red-600 text-white hover:bg-red-700 focus:shadow-outline focus:outline-none"
-                  aria-label="Sign up"
-                  title="Sign up"
-                >
-                  Sign up
-                </Link>
-              </li>
+              {user?.uid ? (
+                <li>
+                  <button
+                    onClick={logOut}
+                    class="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32"
+                    aria-label=" Logout"
+                    title=" Logout"
+                  >
+                    Log out
+                  </button>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      to="/login"
+                      class="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-28"
+                      aria-label=" Login"
+                      title=" Login"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/signup"
+                      class="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-28"
+                      aria-label="Sign up"
+                      title="Sign up"
+                    >
+                      Sign up
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
             <div class="lg:hidden">
               <button

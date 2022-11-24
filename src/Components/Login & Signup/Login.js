@@ -1,10 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebook, FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
+import { authContext } from "../../Context/Context";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const { login } = useContext(authContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location?.state?.from?.pathname || '/'
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    axios.get(`http://localhost:5000/users?email=${email}`)
+      .then(data => {
+        console.log(data?.data?.email)
+        const storedEmail = data?.data?.email;
+        if (storedEmail === email) {
+          login(email, password)
+            .then((result) => {
+              console.log(result?.user);
+              toast.success('login successfully');
+              navigate(from, {replace:true})
+            })
+            .catch((err) => console.log(err));
+        }
+      })
+      .catch(err => console.log(err));
+    
+    console.log(email, password)
+  }
   return (
-    <section >
+    <section>
       <div className="px-6 h-full text-gray-800">
         <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
@@ -15,44 +45,44 @@ const Login = () => {
             />
           </div>
           <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-            <form>
-              <div className="flex flex-row items-center justify-center lg:justify-start">
-                <p className="text-lg mb-0 mr-4">Sign in with</p>
-                <button
-                  type="button"
-                  data-mdb-ripple="true"
-                  data-mdb-ripple-color="light"
-                  className="inline-block p-3 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out mx-1 hover:-translate-y-1"
-                >
-                  <FaGoogle className="text-lg"></FaGoogle>
-                </button>
+            <div className="flex flex-row items-center justify-center lg:justify-start space-x-1">
+              <p className="text-lg mb-0 mr-4">Sign in with</p>
+              <button
+                type="button"
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="light"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+              >
+                <FaGoogle className="text-lg"></FaGoogle>
+              </button>
 
-                <button
-                  type="button"
-                  data-mdb-ripple="true"
-                  data-mdb-ripple-color="light"
-                  className="inline-block p-3 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out mx-1 hover:-translate-y-1"
-                >
-                  <FaFacebookF className="text-lg"></FaFacebookF>
-                </button>
+              <button
+                type="button"
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="light"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+              >
+                <FaFacebookF className="text-lg"></FaFacebookF>
+              </button>
 
-                <button
-                  type="button"
-                  data-mdb-ripple="true"
-                  data-mdb-ripple-color="light"
-                  className="inline-block p-3 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out mx-1 hover:-translate-y-1"
-                >
-                  <FaGithub className="text-lg"></FaGithub>
-                </button>
-              </div>
+              <button
+                type="button"
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="light"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+              >
+                <FaGithub className="text-lg"></FaGithub>
+              </button>
+            </div>
 
-              <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-                <p className="text-center font-semibold mx-4 mb-0">Or</p>
-              </div>
-
+            <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+              <p className="text-center font-semibold mx-4 mb-0">Or</p>
+            </div>
+            <form onSubmit={handleSubmit}>
               {/* <!-- Email input --> */}
               <div className="mb-6">
                 <input
+                  name="email"
                   type="text"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-red-600 focus:outline-none"
                   id="exampleFormControlInput2"
@@ -63,6 +93,7 @@ const Login = () => {
               {/* <!-- Password input -->F */}
               <div className="mb-6">
                 <input
+                  name="password"
                   type="password"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-red-600 focus:outline-none"
                   id="exampleFormControlInput2"
@@ -91,8 +122,8 @@ const Login = () => {
 
               <div className="text-center lg:text-left">
                 <button
-                  type="button"
-                  className="inline-block px-7 py-3 bg-red-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                  type="submit"
+                  className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32"
                 >
                   Login
                 </button>
