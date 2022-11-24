@@ -42,7 +42,7 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  to={""}
+                  to={"/dashboard"}
                   aria-label="Dashboard"
                   title="Dashboard"
                   class="tracking-wide text-gray-700 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
@@ -52,7 +52,7 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  to={""}
+                  to={"/blogs"}
                   aria-label="Blogs"
                   title="Blogs"
                   class="tracking-wide text-gray-700 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
@@ -61,16 +61,26 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-            <ul class="flex items-center hidden space-x-8 lg:flex">
+            <ul class=" items-center hidden space-x-8 lg:flex">
               <li>
-                <a
-                  href="/"
+                <Link
+                 to="/login"
+                  class="btn border-red-600 inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition rounded shadow-md bg-red-600 text-white hover:bg-red-700 focus:shadow-outline focus:outline-none"
+                  aria-label=" Login"
+                  title=" Login"
+                >
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/signup"
                   class="btn border-red-600 inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition rounded shadow-md bg-red-600 text-white hover:bg-red-700 focus:shadow-outline focus:outline-none"
                   aria-label="Sign up"
                   title="Sign up"
                 >
                   Sign up
-                </a>
+                </Link>
               </li>
             </ul>
             <div class="lg:hidden">
@@ -151,7 +161,7 @@ const Header = () => {
                         </li>
                         <li>
                           <Link
-                            to={""}
+                            to={"/dashboard"}
                             aria-label="Dashboard"
                             title="Dashboard"
                             class="tracking-wide text-gray-700 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
@@ -161,7 +171,7 @@ const Header = () => {
                         </li>
                         <li>
                           <Link
-                            to={""}
+                            to={"/blogs"}
                             aria-label="Blogs"
                             title="Blogs"
                             class="tracking-wide text-gray-700 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
