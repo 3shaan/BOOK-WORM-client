@@ -7,7 +7,8 @@ import { useWrongToken } from "../Hooks/useWrongToken";
 
 
 const BuyModal = ({ isOpen, setOpen, book, fetcher }) => {
-  const { price, title, _id, images } = book;
+  const { price, title, _id, images ,seller_email} = book;
+  // console.log(book)
   const { user, logOut } = useContext(authContext);
   const [error, setError] = useState('')
 
@@ -21,10 +22,12 @@ const BuyModal = ({ isOpen, setOpen, book, fetcher }) => {
       productName: title,
       ProductPrice: price,
       BuyerEmail: user?.email,
+      BuyerName: user?.displayName,
       buyerPhone: phone,
       buyerLocation: meeting_location,
       ProductId: _id,
       ProductImg: images[0],
+      sellerEmail: seller_email,
     };
     axios
       .post(

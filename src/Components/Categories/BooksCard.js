@@ -1,9 +1,20 @@
 import React from "react";
+import { MdVerified } from "react-icons/md";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 
 const BooksCard = ({ book }) => {
-  const { images, title, author, price, seller_location, post_time , _id} = book;
+  const {
+    images,
+    title,
+    author,
+    price,
+    seller_location,
+    post_time,
+    _id,
+    seller_name,
+    user_verified,
+  } = book;
   return (
     <div>
       <div className="card w-96 h-[520px] bg-base-200 shadow-xl">
@@ -14,6 +25,15 @@ const BooksCard = ({ book }) => {
           <h2 className="card-title">{title}</h2>
           <p>Author: {author}</p>
           <p className="font-semibold text-red-600">Price :{price} TK</p>
+          <div >
+            <p className="flex gap-1 items-center">
+              Seller: {seller_name}
+              {user_verified && (
+                <MdVerified className="text-blue-600"></MdVerified>
+              )}
+            </p>
+          </div>
+
           <div className="flex justify-between  mr-[-60px]">
             <p>{seller_location}, Bangladesh</p>
             <p>

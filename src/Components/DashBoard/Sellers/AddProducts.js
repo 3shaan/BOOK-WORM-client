@@ -238,7 +238,7 @@ const AddProducts = () => {
                         <input
                           {...register("seller_email", {
                             required: true,
-                            value: `${localStorage.getItem("email")}`,
+                            value: `${user?.email}`,
                           })}
                           type="text"
                           placeholder="Email Address"

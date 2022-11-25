@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouteError } from "react-router";
+import { authContext } from "../../Context/Context";
 
-const Error = ({ isError }) => {
-  const error = useRouteError();
+const Error = ({ error }) => {
+  const { logOut} = useContext(authContext);
+  console.log(error.response.status);
+  if (error?.response?.status === 403 || error?.response?.status === 401) {
+    logOut();
+  }
+  const errors = useRouteError();
   return (
     <section className="flex items-center h-full sm:p-16 dark:bg-gray-900 dark:text-gray-100">
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8 space-y-8 text-center sm:max-w-md">
@@ -37,7 +43,7 @@ const Error = ({ isError }) => {
 
         {
           <i className="text-red-600">
-            {error?.statusText || error?.message || isError?.message}
+            {errors?.statusText || errors?.message || error?.message}
           </i>
         }
 
