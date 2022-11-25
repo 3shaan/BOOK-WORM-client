@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useFetcher, useLoaderData, useNavigate } from 'react-router-dom';
 import BookDesc from './BookDesc';
 import BooksInfo from './BooksInfo';
 import BuyModal from './BuyModal';
@@ -9,7 +9,8 @@ import PriceCard from './PriceCard';
 const BookDetails = () => {
     const book = useLoaderData();
     const [isOpen, setOpen] = useState(false);
-    console.log(book)
+  console.log(book)
+  const fetcher = useNavigate();
     return (
       <div className="w-10/12 mx-auto mt-10 bg-gray-100 p-5">
         <div className="flex gap-10">
@@ -20,7 +21,14 @@ const BookDetails = () => {
         <div className="w-full">
           <BookDesc book={book}></BookDesc>
         </div>
-        <BuyModal isOpen={isOpen} setOpen={setOpen} book={book}></BuyModal>
+        {isOpen && (
+          <BuyModal
+            fetcher={fetcher}
+            isOpen={isOpen}
+            setOpen={setOpen}
+            book={book}
+          ></BuyModal>
+        )}
       </div>
     );
 };

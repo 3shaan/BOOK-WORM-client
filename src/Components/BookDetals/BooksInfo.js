@@ -11,7 +11,9 @@ const BooksInfo = ({ book, setOpen }) => {
     Original_price,
     genre,
     uses,
+    sold
   } = book;
+  console.log(sold)
   return (
     <div>
       <div className="space-y-3">
@@ -25,7 +27,7 @@ const BooksInfo = ({ book, setOpen }) => {
         <p>Original Price : ৳ {Original_price} </p>
         <p>Used : {uses}</p>
         <div className="flex gap-10 pt-10">
-          <button
+          <button disabled={sold}
             htmlFor="my-modal-3"
             onClick={() => setOpen(true)}
             className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"

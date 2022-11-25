@@ -9,7 +9,7 @@ const auth = getAuth(app);
 const Context = ({ children }) => {
     const googleProvider = new GoogleAuthProvider();
     
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
 
 
     // check user 
@@ -42,6 +42,7 @@ const Context = ({ children }) => {
             signOut(auth)
                 .then(() => { 
                     localStorage.removeItem('token')
+                    localStorage.removeItem('email')
                 })
                 .catch(err => console.log(err))
         )

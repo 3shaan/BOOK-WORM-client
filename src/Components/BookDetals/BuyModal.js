@@ -1,38 +1,56 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { authContext } from "../../Context/Context";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useWrongToken } from "../Hooks/useWrongToken";
 
 
-const BuyModal = ({ isOpen, setOpen, book }) => {
-    const { price, title , _id, images} = book;
-    const { user } = useContext(authContext);
-console.log(images[0])
+const BuyModal = ({ isOpen, setOpen, book, fetcher }) => {
+  const { price, title, _id, images } = book;
+  const { user, logOut } = useContext(authContext);
+  const [error, setError] = useState('')
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        const phone = event.target.phone.value;
-        const meeting_location = event.target.location.value;
-        const buyProduct = {
-          productName: title,
-          ProductPrice: price,
-          BuyerEmail: user?.email,
-          buyerPhone: phone,
-          buyerLocation: meeting_location,
-          ProductId: _id,
-          ProductImg: images[0],
-        };
-        axios.post("http://localhost:5000/buy", {
-            buyProduct
-        })
-            .then(data => {
-                console.log(data)
-                if (data?.data?.acknowledged === true) {
-                    toast.success('Product buy complete')
-                }
-            })
-            .catch(err => console.log(err));
-    }
+  const wrongToken = useWrongToken(error);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const phone = event.target.phone.value;
+    const meeting_location = event.target.location.value;
+    const buyProduct = {
+      productName: title,
+      ProductPrice: price,
+      BuyerEmail: user?.email,
+      buyerPhone: phone,
+      buyerLocation: meeting_location,
+      ProductId: _id,
+      ProductImg: images[0],
+    };
+    axios
+      .post(
+        "http://localhost:5000/buy",
+        {
+          buyProduct,
+        },
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((data) => {
+        console.log(data);
+        if (data?.data?.acknowledged === true) {
+          toast.success("Product buy complete");
+          setOpen(false);
+          fetcher(0);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err)
+      });
+  };
   return (
     <div>
       <input type="checkbox" id="my-modal-3" className="modal-toggle" />

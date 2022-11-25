@@ -130,7 +130,7 @@ const SignUp = () => {
               <div className="flex gap-5 items-center mb-6">
                 <p className="text-lg font-semibold">What are you?</p>
                 <select
-                  {...register("type", { required: true })}
+                  {...register("role", { required: true })}
                   className="select select-bordered w-full max-w-xs"
                   required
                 >

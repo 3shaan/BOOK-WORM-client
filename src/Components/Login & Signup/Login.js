@@ -25,6 +25,7 @@ const Login = () => {
             .then((result) => {
               console.log(result);
               localStorage.setItem("token", data?.data?.token);
+              localStorage.setItem('email',email)
               toast.success('login successfully');
               navigate(from, {replace:true})
             })
