@@ -3,6 +3,9 @@ import BookDetails from "../Components/BookDetals/BookDetails";
 import Category from "../Components/Categories/Category";
 import MyOrders from "../Components/DashBoard/Buyer/MyOrders";
 import DashBoard from "../Components/DashBoard/DashBoard";
+import AddProducts from "../Components/DashBoard/Sellers/AddProducts";
+import MyBuyers from "../Components/DashBoard/Sellers/MyBuyers";
+import MyProducts from "../Components/DashBoard/Sellers/MyProducts";
 import Login from "../Components/Login & Signup/Login";
 import SignUp from "../Components/Login & Signup/SignUp";
 import MainPage from "../Components/MainPage/MainPage";
@@ -48,7 +51,20 @@ export const router = createBrowserRouter([
         {
           path: '/dashboard/myorder',
           element:<MyOrders></MyOrders>
-        }
+        },
+        {
+          path: '/dashboard/addproduct',
+          element:<AddProducts></AddProducts>
+        },
+        {
+          path: '/dashboard/mybuyer',
+          element:<MyBuyers></MyBuyers>
+        },
+        {
+          path: '/dashboard/myproduct',
+          element:<MyProducts></MyProducts>
+        },
+
     ]
   }
 ]);

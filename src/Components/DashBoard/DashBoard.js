@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "../Shared/Header";
 import { BsList } from "react-icons/bs";
 import { Link, Outlet } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { authContext } from "../../Context/Context";
+import { async } from "@firebase/util";
 
 const DashBoard = () => {
+
+  const { data:user, isLoading, isError} = useQuery({
+    queryKey: ["dashboard_user"],
+    queryFn: async () => {
+       const data = axios.get(`http://localhost:5000/users?email=${localStorage.getItem('email')}`)
+      return data;
+
+    }
+  })
+  console.log(user?.data.result?.role)
   return (
     <div>
       <Header></Header>
@@ -29,11 +43,18 @@ const DashBoard = () => {
           <ul className="menu p-4 w-80 bg-base-100 text-base-content">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <Link to={'/dashboard/myorder'}>My Order</Link>
+              <Link to={"/dashboard/myorder"}>My Order</Link>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <Link to={"/dashboard/addproduct"}>Add Product</Link>
             </li>
+            <li>
+              <Link to={"/dashboard/mybuyer"}>My Buyer</Link>
+            </li>
+            <li>
+              <Link to={"/dashboard/myproduct"}>My Product</Link>
+            </li>
+           
           </ul>
         </div>
       </div>

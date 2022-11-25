@@ -6,6 +6,10 @@ import { authContext } from "../../Context/Context";
 import { async } from "@firebase/util";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { getAuth, updateProfile } from "firebase/auth";
+import app from "../../FireBase/FireBase.config";
+
+const auth = getAuth(app);
 
 const SignUp = () => {
     const { emailSignIn } = useContext(authContext);
@@ -20,7 +24,10 @@ const SignUp = () => {
     const onSubmit =  (data) => {
         console.log(data);
         emailSignIn(data?.email, data?.password)
-            .then(result => {
+          .then(result => {
+            updateProfile(auth.currentUser, {
+                displayName:data?.name
+              }).then(()=>{}).catch(err=>console.log(err))
                 
                 axios.post("http://localhost:5000/users", {
                     data

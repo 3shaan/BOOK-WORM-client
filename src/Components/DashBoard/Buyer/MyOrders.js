@@ -17,10 +17,10 @@ const MyOrders = () => {
   } = useQuery({
     queryKey: ["myOrders"],
     queryFn: async () => {
-      const res = fetch(
+      const res = await fetch(
         `http://localhost:5000/buy?email=${localStorage.getItem("email")}`
       );
-      const data = (await res).json();
+      const data = await res.json();
       return data;
     },
   });
