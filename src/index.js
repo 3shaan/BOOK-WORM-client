@@ -8,16 +8,23 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import Context from './Context/Context';
 import { Toaster } from "react-hot-toast";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 TimeAgo.addDefaultLocale(en);
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();
+const stripePromise = loadStripe(
+  "pk_test_51M6CgPJb8qnACgOFgKeKx1yVEPEBzqO6oETvuYLp4Lzy6xJIasD26TkRerQjqW4YHumyg0Ixlm0AGoOUKgaQXfSr00YTs5hLjZ"
+);
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Context>
-        <App />
+        <Elements stripe={stripePromise}>
+          <App />
+        </Elements>
         <Toaster />
       </Context>
     </QueryClientProvider>

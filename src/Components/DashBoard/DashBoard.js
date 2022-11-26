@@ -49,12 +49,17 @@ const DashBoard = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+          <ul className="menu p-4 w-80  text-base-content">
             {/* <!-- Sidebar content here --> */}
             {userRole === "buyer" && (
-              <li>
-                <Link to={"/dashboard/myorder"}>My Order</Link>
-              </li>
+              <>
+                <li>
+                  <Link to={"/dashboard/myorder"}>My Order</Link>
+                </li>
+                <li>
+                  <Link to={"/dashboard/wishlist"}>My WishList</Link>
+                </li>
+              </>
             )}
             {userRole === "seller" && (
               <>
@@ -77,9 +82,6 @@ const DashBoard = () => {
                 </li>
                 <li>
                   <Link to={"/dashboard/allsellers"}>All Sellers</Link>
-                </li>
-                <li>
-                  <Link to={"/dashboard/reported_items"}>Reported Items</Link>
                 </li>
               </>
             )}

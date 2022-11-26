@@ -5,6 +5,8 @@ import AllBuyers from "../Components/DashBoard/Admin/AllBuyers";
 import AllSellers from "../Components/DashBoard/Admin/AllSellers";
 import ReportedItems from "../Components/DashBoard/Admin/ReportedItems";
 import MyOrders from "../Components/DashBoard/Buyer/MyOrders";
+import Payment from "../Components/DashBoard/Buyer/Payment";
+import WishList from "../Components/DashBoard/Buyer/WishList";
 import DashBoard from "../Components/DashBoard/DashBoard";
 import DashBoardMainContent from "../Components/DashBoard/DashBoardMainContent";
 import AddProducts from "../Components/DashBoard/Sellers/AddProducts";
@@ -89,8 +91,15 @@ export const router = createBrowserRouter([
         element: <AllSellers></AllSellers>,
       },
       {
-        path: "/dashboard/reported_items",
-        element: <ReportedItems></ReportedItems>,
+        path: "/dashboard/wishlist",
+        element: <WishList></WishList>,
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: <Payment></Payment>,
+        loader: ({ params }) => {
+          return fetch(`http://localhost:5000/myproduct/${params.id}`)
+        }
       },
     ],
   },

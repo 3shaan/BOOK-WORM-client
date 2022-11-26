@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 import { authContext } from "../../Context/Context";
 
 const BooksInfo = ({ book, setOpen }) => {
@@ -21,23 +22,35 @@ const BooksInfo = ({ book, setOpen }) => {
   console.log(sold)
 
   const handleWishList =() => {
-    const bookdata = {
+    const bookData = {
       buyerEmail: user?.email,
-      buyerName: user?.displayName,
+      buyerName: user?.displayName ||'',
       productName: title,
       productPrice: price,
       category: genre,
       ProductId: _id,      
     }
 
-    axios.post("http://localhost:5000/wishlist")
-      .then(result => {
-      console.log(result)
+    axios
+      .post(`http://localhost:5000/wishlist?id=${_id}&email=${user?.email}`, bookData)
+      .then((result) => {
+        console.log(result);
+        if (result.data.acknowledged) {
+          toast.success("added to WishList successful");
+        }
+        if (result?.data?.message) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${result?.data?.message}.`,
+          });
+          // toast.error(result?.data?.message);
+        }
       })
-      .catch(err => {
-        toast.error(err.message)
-        console.log(err)
-      })
+      .catch((err) => {
+        toast.error(err.message);
+        console.log(err);
+      });
   }
   return (
     <div>
@@ -61,6 +74,7 @@ const BooksInfo = ({ book, setOpen }) => {
             Buy Now
           </button>
           <button
+            disabled={sold}
             onClick={handleWishList}
             className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
           >
