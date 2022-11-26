@@ -4,7 +4,6 @@ import { authContext } from "../../Context/Context";
 
 const Error = ({ error }) => {
   const { logOut} = useContext(authContext);
-  console.log(error.response.status);
   if (error?.response?.status === 403 || error?.response?.status === 401) {
     logOut();
   }

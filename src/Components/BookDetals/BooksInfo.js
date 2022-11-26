@@ -1,6 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
+import { authContext } from "../../Context/Context";
 
 const BooksInfo = ({ book, setOpen }) => {
+  const { user } = useContext(authContext);
   const {
     post_time,
     title,
@@ -11,9 +15,30 @@ const BooksInfo = ({ book, setOpen }) => {
     Original_price,
     genre,
     uses,
-    sold
+    sold,
+    _id
   } = book;
   console.log(sold)
+
+  const handleWishList =() => {
+    const bookdata = {
+      buyerEmail: user?.email,
+      buyerName: user?.displayName,
+      productName: title,
+      productPrice: price,
+      category: genre,
+      ProductId: _id,      
+    }
+
+    axios.post("http://localhost:5000/wishlist")
+      .then(result => {
+      console.log(result)
+      })
+      .catch(err => {
+        toast.error(err.message)
+        console.log(err)
+      })
+  }
   return (
     <div>
       <div className="space-y-3">
@@ -27,15 +52,19 @@ const BooksInfo = ({ book, setOpen }) => {
         <p>Original Price : ৳ {Original_price} </p>
         <p>Used : {uses}</p>
         <div className="flex gap-10 pt-10">
-          <button disabled={sold}
+          <button
+            disabled={sold}
             htmlFor="my-modal-3"
             onClick={() => setOpen(true)}
             className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
           >
             Buy Now
           </button>
-          <button className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full">
-            Add to cart
+          <button
+            onClick={handleWishList}
+            className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
+          >
+            Add to wishlist
           </button>
         </div>
       </div>

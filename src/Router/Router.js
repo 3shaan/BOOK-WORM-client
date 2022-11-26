@@ -10,6 +10,7 @@ import DashBoardMainContent from "../Components/DashBoard/DashBoardMainContent";
 import AddProducts from "../Components/DashBoard/Sellers/AddProducts";
 import MyBuyers from "../Components/DashBoard/Sellers/MyBuyers";
 import MyProducts from "../Components/DashBoard/Sellers/MyProducts";
+import Error from "../Components/Load & Error/Error";
 import Login from "../Components/Login & Signup/Login";
 import SignUp from "../Components/Login & Signup/SignUp";
 import MainPage from "../Components/MainPage/MainPage";
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement: <Error></Error>,
     children: [
       {
         path: "/",
@@ -56,11 +58,12 @@ export const router = createBrowserRouter([
         <DashBoard></DashBoard>
       </PrivateRoute>
     ),
+    errorElement: <Error></Error>,
     children: [
       {
         path: "/dashboard",
-        element:<DashBoardMainContent></DashBoardMainContent>
-    },
+        element: <DashBoardMainContent></DashBoardMainContent>,
+      },
       {
         path: "/dashboard/myorder",
         element: <MyOrders></MyOrders>,

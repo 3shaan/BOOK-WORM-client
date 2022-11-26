@@ -17,7 +17,7 @@ const BooksCard = ({ book }) => {
   } = book;
   return (
     <div>
-      <div className="card w-96 h-[520px] bg-base-200 shadow-xl">
+      <div className="card w-96 h-[520px] bg-base-200 shadow-xl transform hover:-translate-y-1 duration-200 ease-in-out">
         <figure className="p-5">
           <img className="rounded-lg h-52 w-80" src={images[0]} alt="Shoes" />
         </figure>
@@ -25,7 +25,7 @@ const BooksCard = ({ book }) => {
           <h2 className="card-title">{title}</h2>
           <p>Author: {author}</p>
           <p className="font-semibold text-red-600">Price :{price} TK</p>
-          <div >
+          <div>
             <p className="flex gap-1 items-center">
               Seller: {seller_name}
               {user_verified && (

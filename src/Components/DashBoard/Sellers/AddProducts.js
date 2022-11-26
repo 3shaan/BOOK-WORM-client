@@ -2,44 +2,105 @@ import { getValue } from '@testing-library/user-event/dist/utils';
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { authContext } from '../../../Context/Context';
+
 
 const AddProducts = () => {
   const { user } = useContext(authContext);
   console.log(user.email)
   const [img, setImg] = useState('');
+  const navigate = useNavigate();
    const {
      register,
      handleSubmit,
      formState: { errors },
+     reset
   } = useForm();
   
-  const onSubmit = async (data) => {
-    console.log(img.target.files[0])
-    const image = img.target.files[0];
+  const onSubmit = async (product) => {
+
+    // a timer for better UI
+    let timerInterval;
+    Swal.fire({
+      title: "Product uploading...!",
+      html: "I will close in <b></b> milliseconds.",
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+
+    // main operation start
+
+    const image = img?.target?.files[0];
      const formData = new FormData();
     formData.append("image", image);
-    const uploadImg = await axios.post(
+   axios.post(
       "https://api.imgbb.com/1/upload?key=7393967092b740dbb7156b576663d2f7"
-      , formData)
-    console.log(uploadImg?.data?.data?.url);
-    const images = [uploadImg?.data?.data?.url];
-    const post_time = new Date();
-    const uploadProduct = { ...data, images, post_time };
+     , formData)
+     .then(data => {
+       
+       if (data?.data?.success) {
+         console.log(data.data.data.url);
+         const images = [data?.data?.data?.url];
+         const post_time = new Date();
+         const uploadProduct = { ...product, images, post_time };
+         axios.post("http://localhost:5000/books", uploadProduct)
+           .then(data => {
+             console.log(data)
+             reset();
+             if (data?.data?.acknowledged) {
+             Swal.fire({
+               position: "center",
+               icon: "success",
+               title: "Your Product added Successful",
+               showConfirmButton: false,
+               timer: 1500,
+             });
+               navigate("/dashboard/myproduct");
+           }
+           })
+           .catch(err => {
+             console.log(err)
+             toast.error(err.message)
+         })
+         
+       }
+     })
+     .catch(err => {
+       if (err?.response?.status === 400) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: 'Did You add a valid Images file?',
+        });
+       } console.log(err);
+     })
 
-    const uploadData = await axios.post("http://localhost:5000/books", uploadProduct);
-    if (uploadData.data.acknowledged) {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Your Product added Successful",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-    console.log(uploadData);
-    console.log(uploadProduct);
+
+    
+
+
+   
+    
+    // console.log(uploadData);
   };
     return (
       <div>
@@ -68,6 +129,7 @@ const AddProducts = () => {
                         <span className="label-text">Product Name</span>
                       </label>
                       <input
+                        required
                         {...register("title", { required: true })}
                         type="text"
                         placeholder="Book Name"
@@ -79,6 +141,7 @@ const AddProducts = () => {
                         <span className="label-text">Author Name</span>
                       </label>
                       <input
+                        required
                         {...register("author", { required: true })}
                         type="text"
                         placeholder="Author Name"
@@ -103,6 +166,7 @@ const AddProducts = () => {
                         <span className="label-text">price</span>
                       </label>
                       <input
+                        required
                         {...register("price", { required: true })}
                         type="text"
                         placeholder="Product Price"
@@ -114,6 +178,7 @@ const AddProducts = () => {
                         <span className="label-text">Original Price</span>
                       </label>
                       <input
+                        required
                         {...register("Original_price", { required: true })}
                         type="text"
                         placeholder="Original Price"
@@ -127,6 +192,7 @@ const AddProducts = () => {
                         </span>
                       </label>
                       <input
+                        required
                         {...register("uses", { required: true })}
                         type="text"
                         placeholder="Month/Year"
@@ -140,6 +206,7 @@ const AddProducts = () => {
                         </span>
                       </label>
                       <input
+                        required
                         {...register("condition", { required: true })}
                         type="text"
                         placeholder="good/bad"
@@ -166,6 +233,7 @@ const AddProducts = () => {
                       </span>
                     </label>
                     <textarea
+                      required
                       {...register("desc", { required: true })}
                       className="textarea textarea-bordered rounded-lg"
                       placeholder="Product Description"
@@ -190,7 +258,8 @@ const AddProducts = () => {
                     Personal Information
                   </h3>
                   <p className="mt-1 text-sm text-gray-600">
-                    Use a permanent address where you can receive mail.
+                    Please insert your legal contact information so that seller
+                    can contact you.
                   </p>
                 </div>
               </div>
@@ -205,7 +274,8 @@ const AddProducts = () => {
                         >
                           Full Name
                         </label>
-                        <input
+                        <input defaultValue={user?.displayName}
+                          required
                           {...register("seller_name", { required: true })}
                           type="text"
                           placeholder="Full Name"
@@ -221,8 +291,9 @@ const AddProducts = () => {
                           Phone Number
                         </label>
                         <input
+                          required
                           {...register("seller_phone", { required: true })}
-                          type="text"
+                          type="number"
                           placeholder="Phone Number"
                           className="input input-bordered w-full max-w-xs rounded-lg"
                         />
@@ -236,6 +307,7 @@ const AddProducts = () => {
                           Email address
                         </label>
                         <input
+                          disabled
                           {...register("seller_email", {
                             required: true,
                             value: `${user?.email}`,
@@ -253,6 +325,7 @@ const AddProducts = () => {
                           Location
                         </label>
                         <input
+                          required
                           {...register("seller_location", { required: true })}
                           type="text"
                           placeholder="Location"
@@ -264,9 +337,9 @@ const AddProducts = () => {
                   <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                     <button
                       type="submit"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
-                      Save
+                      Add Product
                     </button>
                   </div>
                 </div>
