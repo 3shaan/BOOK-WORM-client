@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebook, FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { authContext } from "../../Context/Context";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const Login = () => {
-  const { login } = useContext(authContext);
+  const { login, googleLogIn } = useContext(authContext);
   const location = useLocation();
+
   const navigate = useNavigate();
-  const from = location?.state?.from?.pathname || '/'
+  const from = location?.state?.from?.pathname || "/";
   const handleSubmit = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -23,11 +24,10 @@ const Login = () => {
         if (storedEmail === email) {
           login(email, password)
             .then((result) => {
-              console.log(result);
               localStorage.setItem("token", data?.data?.token);
-              localStorage.setItem('email',email)
               toast.success('login successfully');
-              navigate(from, {replace:true})
+              navigate(from, { replace: true });
+               
             })
             .catch((err) => console.log(err));
         }
@@ -36,6 +36,53 @@ const Login = () => {
     
     console.log(email, password)
   }
+
+  // google log in
+
+  const handleGoogle = () => {
+    googleLogIn()
+      .then((res) => {
+        console.log(res);
+        const user = res.user;
+        const data = {
+          email: user?.email,
+          name: user?.displayName,
+          role: "buyer",
+        };
+
+        axios
+          .get(`http://localhost:5000/google_user?email=${user?.email}`)
+          .then((data2) => {
+            console.log(data2);
+            const storedEmail = data2?.data?.result?.email;
+            if (storedEmail === user?.email) {
+              toast.success("Sign up successful");
+              localStorage.setItem("token", data2?.data?.token);
+              navigate("/", { replace: true });
+              return;
+            }
+            axios
+              .post("http://localhost:5000/users", {
+                data,
+              })
+              .then((user) => {
+                if (user?.data?.result?.acknowledged === true) {
+                  toast.success("Sign up successful");
+                  localStorage.setItem("token", user?.data?.token);
+                  navigate("/", { replace: true });
+                }
+                console.log(user);
+              })
+              .catch((err) => {
+                console.log(err);
+                // setIsError(err.message);
+              });
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
+  
   return (
     <section>
       <div className="px-6 h-full text-gray-800">
@@ -51,6 +98,7 @@ const Login = () => {
             <div className="flex flex-row items-center justify-center lg:justify-start space-x-1">
               <p className="text-lg mb-0 mr-4">Sign in with</p>
               <button
+                onClick={handleGoogle}
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"

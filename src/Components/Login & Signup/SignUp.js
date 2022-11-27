@@ -12,7 +12,7 @@ import app from "../../FireBase/FireBase.config";
 const auth = getAuth(app);
 
 const SignUp = () => {
-    const { emailSignIn } = useContext(authContext);
+    const { emailSignIn, googleLogIn } = useContext(authContext);
   const [isError, setIsError] = useState('');
   const navigate = useNavigate();
   const {
@@ -48,6 +48,53 @@ const SignUp = () => {
         .catch(err=>setIsError(err.message))
         
   };
+
+  //google login 
+  const handleGoogle = () => {
+    googleLogIn()
+      .then(res => {
+        console.log(res)
+        const user = res.user;
+        const data = {
+          email: user?.email,
+          name: user?.displayName,
+          role: "buyer",
+        };
+        
+    axios
+      .get(`http://localhost:5000/google_user?email=${user?.email}`)
+      .then((data2) => {
+        console.log(data2);
+        const storedEmail = data2?.data?.result?.email;
+        if (storedEmail === user?.email) {
+          toast.success("Sign up successful");
+          localStorage.setItem("token", data2?.data?.token);
+          navigate("/", { replace: true });
+          return;
+        }
+        axios
+          .post("http://localhost:5000/users", {
+            data,
+          })
+          .then((user) => {
+            if (user?.data?.result?.acknowledged === true) {
+              toast.success("Sign up successful");
+              localStorage.setItem("token", user?.data?.token);
+              navigate("/", { replace: true });
+            }
+            console.log(user);
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsError(err.message);
+          });
+      })
+      .catch((err) => console.log(err));
+        
+
+      })
+      .catch(err => console.log(err));
+  }
   return (
     <section>
       <div className="px-6 h-full text-gray-800">
@@ -63,6 +110,7 @@ const SignUp = () => {
             <div className="flex flex-row items-center justify-center lg:justify-start space-x-1">
               <p className="text-lg mb-0 mr-4">Sign up with</p>
               <button
+                onClick={handleGoogle}
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"

@@ -1,5 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
+import Loading from '../Components/Load & Error/Loading';
 import app from '../FireBase/FireBase.config';
 export const authContext = createContext();
 export {getAuth} from 'firebase/auth'
@@ -49,6 +52,7 @@ const Context = ({ children }) => {
                 .then(() => { 
                     localStorage.removeItem('token')
                     localStorage.removeItem('email')
+                    setUser(null);
                     setLoading(false);
                 })
                 .catch(err => console.log(err))

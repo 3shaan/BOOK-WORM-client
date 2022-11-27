@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { FaAmazonPay } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { authContext } from "../../../Context/Context";
 import Loading from "../../Load & Error/Loading";
@@ -76,9 +77,11 @@ const WishList = () => {
                     <td>{wish?.productPrice} TK</td>
                     <td>
                       <div className="flex gap-3">
-                        <button className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12">
-                          <FaAmazonPay className="text-3xl"></FaAmazonPay>
-                        </button>
+                        <Link to={`/dashboard/payment/${wish?._id}`}>
+                          <button className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12">
+                            <FaAmazonPay className="text-3xl"></FaAmazonPay>
+                          </button>
+                        </Link>
                         <button
                           onClick={() => handleDelete(wish?._id)}
                           className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12"

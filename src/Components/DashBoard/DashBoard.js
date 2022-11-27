@@ -20,7 +20,7 @@ const DashBoard = () => {
     }
   })
   console.log(user?.data.result?.role)
-  const userRole = user?.data.result?.role;
+  const userRole = user?.data?.result?.role;
   if (isLoading) {
     return <Loading></Loading>
   }
