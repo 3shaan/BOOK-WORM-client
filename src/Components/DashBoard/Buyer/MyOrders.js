@@ -6,7 +6,6 @@ import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { authContext } from "../../../Context/Context";
-import PaymentModal from "./PaymentModal";
 
 const MyOrders = () => {
   const { user } = useContext(authContext);
@@ -91,16 +90,24 @@ const MyOrders = () => {
                   <td>{product?.ProductPrice} TK</td>
                   <td>
                     <div className="flex gap-3">
-                      <Link to={`/dashboard/payment/${product?._id}`}>
-                        <button className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12">
-                          <FaAmazonPay className="text-3xl"></FaAmazonPay>
+                      {product?.payment ? (
+                        <button className="btn btn-sm bg-blue-600 hover:bg-transparent text-white hover:text-black border-blue-600 hover:border-blue-600 h-12 text-xs ">
+                          paid
                         </button>
-                      </Link>
+                      ) : (
+                        <>
+                          <Link to={`/dashboard/payment/${product?._id}`}>
+                            <button className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12">
+                              <FaAmazonPay className="text-2xl"></FaAmazonPay>
+                            </button>
+                          </Link>
+                        </>
+                      )}
                       <button
                         onClick={() => handleDelete(product?._id)}
                         className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12"
                       >
-                        <MdDeleteForever className="text-3xl"></MdDeleteForever>
+                        <MdDeleteForever className="text-2xl"></MdDeleteForever>
                       </button>
                     </div>
                   </td>

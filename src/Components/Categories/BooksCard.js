@@ -14,9 +14,10 @@ const BooksCard = ({ book }) => {
     _id,
     seller_name,
     user_verified,
+    payment
   } = book;
   return (
-    <div>
+    <div className={`${payment && 'hidden'}`}>
       <div className="card w-96 h-[520px] bg-base-200 shadow-xl transform hover:-translate-y-1 duration-200 ease-in-out">
         <figure className="p-5">
           <img className="rounded-lg h-52 w-80" src={images[0]} alt="Shoes" />

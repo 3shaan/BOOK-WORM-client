@@ -3,15 +3,24 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 import Loading from "../../Load & Error/Loading";
 
 const Payment = () => {
   const productData = useLoaderData();
 
-  const { ProductPrice } = productData;
-  console.log(ProductPrice);
+  const {
+    ProductPrice,
+    BuyerEmail,
+    ProductId,
+    buyerPhone,
+    sellerEmail,
+    productName,
+  } = productData;
+  // console.log(productData);
   const stripe = useStripe();
   const elements = useElements();
+  const[trasId, setTransId] = useState('')
 
   const {
     data: clientSecret,
@@ -31,10 +40,34 @@ const Payment = () => {
     return <Loading></Loading>;
   }
   // console.log(error)
-  console.log(clientSecret);
+  // console.log(clientSecret);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    //timer
+      let timerInterval;
+      Swal.fire({
+        title: "Payment Processing......!",
+        html: "It will close in <b></b> milliseconds.",
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector("b");
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+      });
+    //main process start
     if (!stripe || !elements) {
       return;
     }
@@ -50,9 +83,7 @@ const Payment = () => {
 
     if (error) {
       console.log(error);
-    } else {
-      console.log("pay", paymentMethod);
-    }
+    } 
 
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -69,7 +100,29 @@ const Payment = () => {
     }
     console.log(paymentIntent);
     if (paymentIntent.status === "succeeded") {
-      const payInfo = {};
+      const payInfo = {
+        sellerEmail,
+        BuyerEmail,
+        ProductId,
+        PaymentPrice: ProductPrice,
+        transactionID: paymentIntent?.id,
+        productName,
+      };
+      axios.post("http://localhost:5000/payment_success",payInfo)
+        .then(result => {
+          console.log(result)
+          setTransId(paymentIntent?.id);
+          if (result?.data?.acknowledged) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Payment Successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        })
+      .catch(err=>console.log(err))
     }
   };
 
@@ -96,6 +149,7 @@ const Payment = () => {
               </button>
             </form>
           </div>
+          <div>{trasId && <p>transactionID : {trasId}</p>}</div>
         </div>
       </div>
     </div>
