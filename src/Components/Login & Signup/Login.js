@@ -16,26 +16,29 @@ const Login = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    axios.get(`http://localhost:5000/users?email=${email}`)
-      .then(data => {
-        const storedEmail =data?.data?.result?.email;
+    axios
+      .get(`https://book-worm-server.vercel.app/users?email=${email}`)
+      .then((data) => {
+        const storedEmail = data?.data?.result?.email;
         console.log(data?.data?.token);
         console.log(data?.data?.result?.email);
         if (storedEmail === email) {
           login(email, password)
             .then((result) => {
               localStorage.setItem("token", data?.data?.token);
-              toast.success('login successfully');
+              toast.success("login successfully");
               navigate(from, { replace: true });
-               
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+              toast.error(err?.message);
+              console.log(err);
+            });
         }
       })
-      .catch(err => console.log(err));
-    
-    console.log(email, password)
-  }
+      .catch((err) => console.log(err));
+
+    console.log(email, password);
+  };
 
   // google log in
 
@@ -51,7 +54,9 @@ const Login = () => {
         };
 
         axios
-          .get(`http://localhost:5000/google_user?email=${user?.email}`)
+          .get(
+            `https://book-worm-server.vercel.app/google_user?email=${user?.email}`
+          )
           .then((data2) => {
             console.log(data2);
             const storedEmail = data2?.data?.result?.email;
@@ -62,7 +67,7 @@ const Login = () => {
               return;
             }
             axios
-              .post("http://localhost:5000/users", {
+              .post("https://book-worm-server.vercel.app/users", {
                 data,
               })
               .then((user) => {
@@ -82,7 +87,7 @@ const Login = () => {
       })
       .catch((err) => console.log(err));
   };
-  
+
   return (
     <section>
       <div className="px-6 h-full text-gray-800">

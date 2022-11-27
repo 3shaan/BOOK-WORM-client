@@ -12,8 +12,8 @@ import app from "../../FireBase/FireBase.config";
 const auth = getAuth(app);
 
 const SignUp = () => {
-    const { emailSignIn, googleLogIn } = useContext(authContext);
-  const [isError, setIsError] = useState('');
+  const { emailSignIn, googleLogIn } = useContext(authContext);
+  const [isError, setIsError] = useState("");
   const navigate = useNavigate();
   const {
     register,
@@ -21,59 +21,18 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-    const onSubmit =  (data) => {
-        console.log(data);
-        emailSignIn(data?.email, data?.password)
-          .then(result => {
-            updateProfile(auth.currentUser, {
-                displayName:data?.name
-              }).then(()=>{}).catch(err=>console.log(err))
-                
-                axios.post("http://localhost:5000/users", {
-                    data
-                })
-                  .then(user => {
-                    if (user?.data?.result?.acknowledged === true) {
-                      toast.success('Sign up successful');
-                      localStorage.setItem('token', user?.data?.token);
-                      navigate('/',{replace:true})
-                    }
-                    console.log(user);
-                  })
-                    .catch(err => {
-                        console.log(err);
-                        setIsError(err.message)
-                })
-            })
-        .catch(err=>setIsError(err.message))
-        
-  };
+  const onSubmit = (data) => {
+    console.log(data);
+    emailSignIn(data?.email, data?.password)
+      .then((result) => {
+        updateProfile(auth.currentUser, {
+          displayName: data?.name,
+        })
+          .then(() => {})
+          .catch((err) => console.log(err));
 
-  //google login 
-  const handleGoogle = () => {
-    googleLogIn()
-      .then(res => {
-        console.log(res)
-        const user = res.user;
-        const data = {
-          email: user?.email,
-          name: user?.displayName,
-          role: "buyer",
-        };
-        
-    axios
-      .get(`http://localhost:5000/google_user?email=${user?.email}`)
-      .then((data2) => {
-        console.log(data2);
-        const storedEmail = data2?.data?.result?.email;
-        if (storedEmail === user?.email) {
-          toast.success("Sign up successful");
-          localStorage.setItem("token", data2?.data?.token);
-          navigate("/", { replace: true });
-          return;
-        }
         axios
-          .post("http://localhost:5000/users", {
+          .post("https://book-worm-server.vercel.app/users", {
             data,
           })
           .then((user) => {
@@ -89,12 +48,55 @@ const SignUp = () => {
             setIsError(err.message);
           });
       })
-      .catch((err) => console.log(err));
-        
+      .catch((err) => setIsError(err.message));
+  };
 
+  //google login
+  const handleGoogle = () => {
+    googleLogIn()
+      .then((res) => {
+        console.log(res);
+        const user = res.user;
+        const data = {
+          email: user?.email,
+          name: user?.displayName,
+          role: "buyer",
+        };
+
+        axios
+          .get(
+            `https://book-worm-server.vercel.app/google_user?email=${user?.email}`
+          )
+          .then((data2) => {
+            console.log(data2);
+            const storedEmail = data2?.data?.result?.email;
+            if (storedEmail === user?.email) {
+              toast.success("Sign up successful");
+              localStorage.setItem("token", data2?.data?.token);
+              navigate("/", { replace: true });
+              return;
+            }
+            axios
+              .post("https://book-worm-server.vercel.app/users", {
+                data,
+              })
+              .then((user) => {
+                if (user?.data?.result?.acknowledged === true) {
+                  toast.success("Sign up successful");
+                  localStorage.setItem("token", user?.data?.token);
+                  navigate("/", { replace: true });
+                }
+                console.log(user);
+              })
+              .catch((err) => {
+                console.log(err);
+                setIsError(err.message);
+              });
+          })
+          .catch((err) => console.log(err));
       })
-      .catch(err => console.log(err));
-  }
+      .catch((err) => console.log(err));
+  };
   return (
     <section>
       <div className="px-6 h-full text-gray-800">

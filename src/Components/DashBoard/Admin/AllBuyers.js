@@ -1,25 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
+import { useWrongToken } from "../../Hooks/useWrongToken";
 import Loading from "../../Load & Error/Loading";
 
 const AllBuyers = () => {
-  const { data: buyers , isLoading} = useQuery({
+  const [error1, setError] = useState("");
+
+  const wrongToken = useWrongToken(error1);
+  const {
+    data: buyers,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["allBuyers"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users_type?type=buyer");
-      const data = await res.json();
-      return data;
+      const res = await axios.get(
+        "https://book-worm-server.vercel.app/users_type?type=buyer",
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+      // const data = await res.json();
+      return res?.data;
     },
   });
   console.log(buyers);
   if (isLoading) {
     return <Loading></Loading>;
   }
+  if (isError) {
+    return setError(error);
+  }
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -30,24 +49,25 @@ const AllBuyers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/users/${id}`)
-          .then(result => {
+        axios
+          .delete(`https://book-worm-server.vercel.app/users/${id}`, {
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
+          })
+          .then((result) => {
             console.log(result);
             if (result.data.acknowledged) {
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
             }
-              
-        })
-        
+          })
+          .catch((err) => {
+            setError(err);
+          });
       }
     });
-    console.log(id)
-    
-
-
-  }
-
-
+    console.log(id);
+  };
 
   return (
     <div>

@@ -1,22 +1,40 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { authContext } from "../../../Context/Context";
+import { useWrongToken } from "../../Hooks/useWrongToken";
 import Loading from "../../Load & Error/Loading";
 
 const MyBuyers = () => {
   const { user } = useContext(authContext);
-  const { data: buyers , isLoading} = useQuery({
+  const [err, setError] = useState("");
+
+  const wrongToken = useWrongToken(err);
+  const {
+    data: buyers,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["myBuyer"],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5000/buyer?email=${user?.email}`
+      const res = await axios.get(
+        `https://book-worm-server.vercel.app/buyer?email=${user?.email}`,
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
       );
-      const data = await res.json();
-      return data;
+      // const data = await res.json();
+      return res?.data;
     },
   });
   if (isLoading) {
     return <Loading></Loading>;
+  }
+  if (isError) {
+    setError(error);
   }
 
   console.log(buyers);

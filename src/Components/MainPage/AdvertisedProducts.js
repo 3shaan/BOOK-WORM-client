@@ -12,7 +12,9 @@ const AdvertisedProducts = () => {
   } = useQuery({
     queryKey: ["advertised"],
     queryFn: async () => {
-      const data = await axios.get("http://localhost:5000/advertised");
+      const data = await axios.get(
+        "https://book-worm-server.vercel.app/advertised"
+      );
       return data?.data;
     },
   });

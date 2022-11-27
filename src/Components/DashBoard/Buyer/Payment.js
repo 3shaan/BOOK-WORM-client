@@ -17,10 +17,10 @@ const Payment = () => {
     sellerEmail,
     productName,
   } = productData;
-  // console.log(productData);
+  console.log(ProductPrice);
   const stripe = useStripe();
   const elements = useElements();
-  const[trasId, setTransId] = useState('')
+  const [trasId, setTransId] = useState("");
 
   const {
     data: clientSecret,
@@ -28,45 +28,51 @@ const Payment = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["payment"],
+    queryKey: ["payments"],
     queryFn: async () => {
-      const { data } = await axios.post("http://localhost:5000/payment", {
-        ProductPrice,
+      const res = await fetch("https://book-worm-server.vercel.app/payments", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ ProductPrice }),
       });
-      return data?.clientSecret;
+      const data = await res.json();
+      return data.clientSecret;
     },
   });
   if (isLoading) {
     return <Loading></Loading>;
   }
   // console.log(error)
-  // console.log(clientSecret);
+  console.log(clientSecret);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     //timer
-      let timerInterval;
-      Swal.fire({
-        title: "Payment Processing......!",
-        html: "It will close in <b></b> milliseconds.",
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading();
-          const b = Swal.getHtmlContainer().querySelector("b");
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft();
-          }, 100);
-        },
-        willClose: () => {
-          clearInterval(timerInterval);
-        },
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
-        }
-      });
+    let timerInterval;
+    Swal.fire({
+      title: "Payment Processing......!",
+      html: "It will close in <b></b> milliseconds.",
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
     //main process start
     if (!stripe || !elements) {
       return;
@@ -83,7 +89,7 @@ const Payment = () => {
 
     if (error) {
       console.log(error);
-    } 
+    }
 
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -108,9 +114,14 @@ const Payment = () => {
         transactionID: paymentIntent?.id,
         productName,
       };
-      axios.post("http://localhost:5000/payment_success",payInfo)
-        .then(result => {
-          console.log(result)
+      axios
+        .post("https://book-worm-server.vercel.app/payment_success", payInfo, {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        })
+        .then((result) => {
+          console.log(result);
           setTransId(paymentIntent?.id);
           if (result?.data?.acknowledged) {
             Swal.fire({
@@ -122,7 +133,7 @@ const Payment = () => {
             });
           }
         })
-      .catch(err=>console.log(err))
+        .catch((err) => console.log(err));
     }
   };
 

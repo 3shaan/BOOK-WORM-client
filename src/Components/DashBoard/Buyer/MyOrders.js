@@ -1,36 +1,54 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useContext, useState } from "react";
+import { set } from "react-hook-form";
 import { FaAmazonPay } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { authContext } from "../../../Context/Context";
+import { useWrongToken } from "../../Hooks/useWrongToken";
+import Loading from "../../Load & Error/Loading";
 
 const MyOrders = () => {
   const { user } = useContext(authContext);
   console.log(user?.email);
+  const [err, setError] = useState("");
 
+  const wrongToken = useWrongToken(err);
 
   const {
     data: products = [],
     isLoading,
-    isError, refetch
+    isError,
+    refetch,
+    error,
   } = useQuery({
     queryKey: ["myOrders"],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5000/buy?email=${user?.email}`
+      const res = await axios.get(
+        `https://book-worm-server.vercel.app/buy?email=${user?.email}`,
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
       );
-      const data = await res.json();
-      return data;
+      return res?.data;
     },
   });
-    console.log(products);
-    
+  console.log(products);
 
-  const handleDelete = id => {
-    console.log(id)
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+  if (isError) {
+    console.log(error);
+    setError(error);
+  }
+
+  const handleDelete = (id) => {
+    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -41,25 +59,23 @@ const MyOrders = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/buy/${id}`)
-          .then(data => {
+        axios
+          .delete(`https://book-worm-server.vercel.app/buy/${id}`, {
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
+          })
+          .then((data) => {
             console.log(data);
             if (data.data.acknowledged) {
               refetch();
-              Swal.fire(
-                "Deleted!",
-                "Your file has been deleted.",
-                "success"
-              );
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
             }
-                        
           })
-          .catch(err => console.log(err));
-            
+          .catch((err) => console.log(err));
       }
     });
   };
-
 
   return (
     <div>
@@ -118,7 +134,6 @@ const MyOrders = () => {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 };

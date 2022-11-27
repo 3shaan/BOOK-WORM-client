@@ -32,7 +32,7 @@ const Header = () => {
                   Home
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to={""}
                   aria-label="Products"
@@ -41,7 +41,7 @@ const Header = () => {
                 >
                   All Products
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to={"/dashboard"}

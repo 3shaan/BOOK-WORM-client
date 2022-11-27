@@ -5,12 +5,11 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useWrongToken } from "../Hooks/useWrongToken";
 
-
 const BuyModal = ({ isOpen, setOpen, book, fetcher }) => {
-  const { price, title, _id, images ,seller_email} = book;
+  const { price, title, _id, images, seller_email } = book;
   // console.log(book)
   const { user, logOut } = useContext(authContext);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
 
   const wrongToken = useWrongToken(error);
 
@@ -31,7 +30,7 @@ const BuyModal = ({ isOpen, setOpen, book, fetcher }) => {
     };
     axios
       .post(
-        "http://localhost:5000/buy",
+        "https://book-worm-server.vercel.app/buy",
         {
           buyProduct,
         },
@@ -51,7 +50,7 @@ const BuyModal = ({ isOpen, setOpen, book, fetcher }) => {
       })
       .catch((err) => {
         console.log(err);
-        setError(err)
+        setError(err);
       });
   };
   return (

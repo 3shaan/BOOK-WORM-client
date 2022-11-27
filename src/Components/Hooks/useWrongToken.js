@@ -12,6 +12,7 @@ export const useWrongToken = error => {
     if (data === 403 || data === 401) {
         logOut();
         navigate('/login')
-        toast.error('please login again')
+        toast.error('please login again');
+        return;
     }
 }

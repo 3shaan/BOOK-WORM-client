@@ -9,24 +9,29 @@ import Loading from "../Load & Error/Loading";
 import Error from "../Load & Error/Error";
 
 const DashBoard = () => {
-  const { user:users } = useContext(authContext);
+  const { user: users } = useContext(authContext);
 
-  const { data:user, isLoading, isError , error} = useQuery({
+  const {
+    data: user,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["dashboard_user"],
     queryFn: async () => {
-       const data = axios.get(`http://localhost:5000/users?email=${users?.email}`)
+      const data = axios.get(
+        `https://book-worm-server.vercel.app/users?email=${users?.email}`
+      );
       return data;
-
-    }
-  })
-  console.log(user?.data.result?.role)
+    },
+  });
+  console.log(user?.data.result?.role);
   const userRole = user?.data?.result?.role;
   if (isLoading) {
-    return <Loading></Loading>
+    return <Loading></Loading>;
   }
   if (isError) {
-    
-    return <Error error={error}></Error>
+    return <Error error={error}></Error>;
   }
   return (
     <div>

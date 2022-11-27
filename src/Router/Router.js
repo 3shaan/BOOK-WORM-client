@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Blogs from "../Components/Blogs/Blogs";
 import BookDetails from "../Components/BookDetals/BookDetails";
 import Category from "../Components/Categories/Category";
 import AllBuyers from "../Components/DashBoard/Admin/AllBuyers";
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
         element: <MainPage></MainPage>,
       },
       {
+        path: "/blogs",
+        element: <Blogs></Blogs>,
+      },
+      {
         path: "/category/:id",
         element: (
           <PrivateRoute>
@@ -39,7 +44,14 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/category/${params.id}`);
+          return fetch(
+            `https://book-worm-server.vercel.app/category/${params.id}`,
+            {
+              headers: {
+                authorization: localStorage.getItem("token"),
+              },
+            }
+          );
         },
       },
       {
@@ -50,7 +62,14 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/books/${params.id}`);
+          return fetch(
+            `https://book-worm-server.vercel.app/books/${params.id}`,
+            {
+              headers: {
+                authorization: localStorage.getItem("token"),
+              },
+            }
+          );
         },
       },
       {
@@ -136,7 +155,29 @@ export const router = createBrowserRouter([
         path: "/dashboard/payment/:id",
         element: <Payment></Payment>,
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/myproduct/${params.id}`);
+          return fetch(
+            `https://book-worm-server.vercel.app/myproduct/${params.id}`,
+            {
+              headers: {
+                authorization: localStorage.getItem("token"),
+              },
+            }
+          );
+        },
+      },
+      {
+        path: "/dashboard/wishlist/payment/:id",
+        element: <Payment></Payment>,
+        loader: ({ params }) => {
+          console.log(params);
+          return fetch(
+            `https://book-worm-server.vercel.app/wishlist_payment/${params.id}`,
+            {
+              headers: {
+                authorization: localStorage.getItem("token"),
+              },
+            }
+          );
         },
       },
     ],

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaAmazonPay } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
@@ -7,27 +7,44 @@ import { authContext } from "../../../Context/Context";
 import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useWrongToken } from "../../Hooks/useWrongToken";
+import Loading from "../../Load & Error/Loading";
 
 const MyProducts = () => {
   const { user } = useContext(authContext);
+  const [error1, setError] = useState("");
+
+  const wrongToken = useWrongToken(error1);
   const {
     data: myProducts = [],
     isLoading,
     isError,
     refetch,
+    error,
   } = useQuery({
     queryKey: ["myProducts"],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:5000/products?email=${user?.email}`
+      const res = await axios.get(
+        `https://book-worm-server.vercel.app/products?email=${user?.email}`,
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
       );
-      const data = await res.json();
-      return data;
+      // const data = await res.json();
+      return res?.data;
     },
   });
   console.log(myProducts);
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+  if (isError) {
+    return setError(error);
+  }
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -38,60 +55,76 @@ const MyProducts = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/products/${id}`)
-          .then(res => {
+        axios
+          .delete(`https://book-worm-server.vercel.app/products/${id}`, {
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
+          })
+          .then((res) => {
             refetch();
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        })
-          .catch(err => {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          })
+          .catch((err) => {
             console.log(err);
             toast.error(err.message);
-        })
+            setError(err);
+          });
       }
     });
-  }
+  };
 
-  const handleAdvertise = id => {
-    console.log(id)
-    axios.put(`http://localhost:5000/advertise/${id}`)
-      .then(res => {
-        console.log(res)
-         let timerInterval;
-         Swal.fire({
-           title: "Product advertising....",
-           html: "It will close in <b></b> milliseconds.",
-           timer: 2000,
-           timerProgressBar: true,
-           didOpen: () => {
-             Swal.showLoading();
-             const b = Swal.getHtmlContainer().querySelector("b");
-             timerInterval = setInterval(() => {
-               b.textContent = Swal.getTimerLeft();
-             }, 100);
-           },
-           willClose: () => {
-             clearInterval(timerInterval);
-           },
-         }).then((result) => {
-           /* Read more about handling dismissals below */
-           if (result.dismiss === Swal.DismissReason.timer) {
-             if (res?.data?.modifiedCount === 0) {
-               toast.error("This Product already advertised");
-             }
-             if (res?.data?.modifiedCount === 1) {
-               toast.success("advertise successful");
-             }
-             refetch();
-             
-             console.log("I was closed by the timer");
-           }
-         });
+  const handleAdvertise = (id) => {
+    console.log(id);
+    axios
+      .put(
+        `https://book-worm-server.vercel.app/advertise/${id}`,
+        {},
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        let timerInterval;
+        Swal.fire({
+          title: "Product advertising....",
+          html: "It will close in <b></b> milliseconds.",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const b = Swal.getHtmlContainer().querySelector("b");
+            timerInterval = setInterval(() => {
+              b.textContent = Swal.getTimerLeft();
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            if (res?.data?.modifiedCount === 0) {
+              toast.error("This Product already advertised");
+            }
+            if (res?.data?.modifiedCount === 1) {
+              toast.success("advertise successful");
+            }
+            refetch();
+
+            console.log("I was closed by the timer");
+          }
+        });
       })
-      .catch(err => {
-        toast.error(err.message)
-        console.log(err)
-      })
-  }
+      .catch((err) => {
+        // toast.error(err.message);
+        console.log(err);
+        setError(err);
+      });
+  };
   return (
     <div>
       <div className="overflow-x-auto">

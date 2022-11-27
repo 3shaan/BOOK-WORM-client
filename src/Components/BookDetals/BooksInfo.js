@@ -1,11 +1,16 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { authContext } from "../../Context/Context";
+import { useWrongToken } from "../Hooks/useWrongToken";
+import Error from "../Load & Error/Error";
 
 const BooksInfo = ({ book, setOpen }) => {
   const { user } = useContext(authContext);
+  const [error, setError] = useState("");
+
+  const wrongToken = useWrongToken(error);
   const {
     post_time,
     title,
@@ -17,22 +22,30 @@ const BooksInfo = ({ book, setOpen }) => {
     genre,
     uses,
     sold,
-    _id
+    _id,
   } = book;
-  console.log(sold)
+  console.log(sold);
 
-  const handleWishList =() => {
+  const handleWishList = () => {
     const bookData = {
       buyerEmail: user?.email,
-      buyerName: user?.displayName ||'',
+      buyerName: user?.displayName || "",
       productName: title,
-      productPrice: price,
+      ProductPrice: price,
       category: genre,
-      ProductId: _id,      
-    }
+      ProductId: _id,
+    };
 
     axios
-      .post(`http://localhost:5000/wishlist?id=${_id}&email=${user?.email}`, bookData)
+      .post(
+        `https://book-worm-server.vercel.app/wishlist?id=${_id}&email=${user?.email}`,
+        bookData,
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      )
       .then((result) => {
         console.log(result);
         if (result.data.acknowledged) {
@@ -48,10 +61,11 @@ const BooksInfo = ({ book, setOpen }) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.error(err?.response?.data?.message);
+        setError(err);
         console.log(err);
       });
-  }
+  };
   return (
     <div>
       <div className="space-y-3">
