@@ -1,18 +1,27 @@
 import React, { useContext } from "react";
 import { useRouteError } from "react-router";
 import { authContext } from "../../Context/Context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, isRouteErrorResponse } from "react-router-dom";
 
 const Error = ({ error }) => {
-  console.log(error);
+  // console.log(error);
   const navigate = useNavigate();
   const { logOut } = useContext(authContext);
+   const errors = useRouteError();
+  if (isRouteErrorResponse(errors)) {
+    console.log('first')
+    console.log(errors);
+  }
 
-  if (error?.response?.status === 403 || error?.response?.status === 401) {
+  if (
+    error?.response?.status === 403 ||
+    error?.response?.status === 401) {
     logOut();
     navigate("/login");
   }
-  const errors = useRouteError();
+ 
+  
+  
   return (
     <section className="flex items-center h-full sm:p-16 dark:bg-gray-900 dark:text-gray-100">
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8 space-y-8 text-center sm:max-w-md">
