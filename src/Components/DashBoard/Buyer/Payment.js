@@ -2,12 +2,14 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../../Load & Error/Loading";
 
 const Payment = () => {
   const productData = useLoaderData();
+  const navigation = useNavigation();
+ 
 
   const {
     ProductPrice,
@@ -21,6 +23,7 @@ const Payment = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [trasId, setTransId] = useState("");
+   
 
   const {
     data: clientSecret,
@@ -47,6 +50,10 @@ const Payment = () => {
   }
   // console.log(error)
   console.log(clientSecret);
+   
+   if (navigation.state === "loading") {
+     return <Loading></Loading>;
+   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();

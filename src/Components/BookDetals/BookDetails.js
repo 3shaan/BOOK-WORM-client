@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useFetcher, useLoaderData, useNavigate } from 'react-router-dom';
+import { useFetcher, useLoaderData, useNavigate, useNavigation } from 'react-router-dom';
+import Loading from '../Load & Error/Loading';
 import BookDesc from './BookDesc';
 import BooksInfo from './BooksInfo';
 import BuyModal from './BuyModal';
@@ -11,6 +12,10 @@ const BookDetails = () => {
     const [isOpen, setOpen] = useState(false);
   console.log(book)
   const fetcher = useNavigate();
+   const navigation = useNavigation();
+   if (navigation.state === "loading") {
+     return <Loading></Loading>;
+   }
     return (
       <div className="w-10/12 mx-auto mt-10 bg-gray-100 p-5">
         <div className="flex gap-10">
