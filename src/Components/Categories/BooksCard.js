@@ -19,11 +19,11 @@ const BooksCard = ({ book }) => {
   console.log(book)
   return (
     <div className={`${payment && 'hidden'}`}>
-      <div className="card w-96 h-[520px] bg-base-200 shadow-xl transform hover:-translate-y-1 duration-200 ease-in-out">
+      <div className="card w-[300px] bg-base-200 shadow-xl transform hover:-translate-y-1 duration-200 ease-in-out">
         <figure className="p-5">
-          <img className="rounded-lg h-52 w-80" src={images[0]} alt="books" />
+          <img className="rounded-lg h-36 w-72 lg:h-52 lg:w-80" src={images[0]} alt="books" />
         </figure>
-        <div className="card-body">
+        <div className="card-body mt-[-40px]">
           <h2 className="card-title">{title}</h2>
           <p>Author: {author}</p>
           <p className="font-semibold text-red-600">Price :{price} TK</p>
@@ -36,14 +36,14 @@ const BooksCard = ({ book }) => {
             </p>
           </div>
 
-          <div className="flex justify-between  mr-[-60px]">
+          <div className="flex text-xs lg:text-base justify-between  mr-[-60px]">
             <p>{seller_location}, Bangladesh</p>
             <p>
               <ReactTimeAgo date={post_time}></ReactTimeAgo>
             </p>
           </div>
           <Link to={`/books/${_id}`}>
-            <button className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white mt-2 w-full">
+            <button className="btn-sm md:btn rounded-full bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white mt-2 w-full ">
               See Details
             </button>
           </Link>

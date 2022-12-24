@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import BooksCard from "../Categories/BooksCard";
+import Error from "../Load & Error/Error";
 import Loading from "../Load & Error/Loading";
 
 const AdvertisedProducts = () => {
@@ -9,6 +10,7 @@ const AdvertisedProducts = () => {
     data: advertised,
     isLoading,
     isError,
+    error
   } = useQuery({
     queryKey: ["advertised"],
     queryFn: async () => {
@@ -21,6 +23,10 @@ const AdvertisedProducts = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
+
+  if (isError) {
+    return <Error error={error}></Error>
+  }
   console.log(advertised);
   return (
     advertised?.length > 0 && (
@@ -28,7 +34,7 @@ const AdvertisedProducts = () => {
         <h1 className="text-3xl text-center font-semibold text-gray-700 my-5">
           Our HighLighted Product
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {advertised.map((add) => (
             <BooksCard book={add}></BooksCard>
           ))}

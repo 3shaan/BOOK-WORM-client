@@ -10,7 +10,7 @@ const WhyBookWorm = () => {
         <h1 className="text-3xl text-gray-700 text-center font-semibold my-4">
           Why Buy & Sell Books With BookWorm?
         </h1>
-        <div className="flex gap-5 justify-between w-10/12 mx-auto">
+        <div className="flex gap-5 flex-col lg:justify-between w-10/12 mx-auto">
           {/* <div className='flex gap-3'>
                     <img className='w-12' src={category} alt="" />
                     <p>Choose you Products with Category wise</p>

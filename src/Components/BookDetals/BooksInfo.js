@@ -74,9 +74,10 @@ const BooksInfo = ({ book, setOpen }) => {
   };
   return (
     <div>
-      <div className="space-y-3">
+      <div className="space-y-3 text-lg">
         <h1 className="text-2xl font-semi-bold">
-          <span className="font-bold text-3xl">Book Name :</span> {title}
+          <span className="font-bold text-lg md:text-3xl">Book Name :</span>{" "}
+          {title}
         </h1>
         <p className="text-xl">Author Name : {author}</p>
         <p>Category/Genre : {genre}</p>
@@ -84,19 +85,19 @@ const BooksInfo = ({ book, setOpen }) => {
         <p>Condition : {condition}</p>
         <p>Original Price : ৳ {Original_price} </p>
         <p>Used : {uses}</p>
-        <div className="flex gap-10 pt-10">
+        <div className="flex gap-5 md:gap-10 pt-10">
           <button
             disabled={sold}
             htmlFor="my-modal-3"
             onClick={() => setOpen(true)}
-            className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
+            className="btn-sm md:btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
           >
             Buy Now
           </button>
           <button
             disabled={sold}
             onClick={handleWishList}
-            className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
+            className="btn-sm md:btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
           >
             Add to wishlist
           </button>

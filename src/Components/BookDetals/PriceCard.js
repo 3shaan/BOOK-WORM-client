@@ -15,22 +15,22 @@ const PriceCard = ({ book }) => {
   } = book;
 
   return (
-    <div className="bg-slate-200 px-5 py-3 rounded-lg w-80 text-lg space-y-4 font-semibold h-96">
+    <div className="bg-slate-200 px-5 py-3 rounded-lg lg:w-80 lg:text-lg space-y-4 font-semibold h-96 ">
       <h1 className="text-2xl text-center my-2">Seller Information </h1>
       <hr className="border-black mb-7" />
       <div className="flex gap-3 items-center">
-        <BsFillPersonFill className="text-xl"></BsFillPersonFill>
+        <BsFillPersonFill className="text-4xl lg:text-xl"></BsFillPersonFill>
         <span className="hover:underline">{seller_name}</span>
         <span>
           {user_verified && <MdVerified className="text-blue-600"></MdVerified>}
         </span>
       </div>
       <h1 className="flex gap-3 items-center">
-        <GoLocation className="text-xl"></GoLocation>
+        <GoLocation className="text-4xl lg:text-xl"></GoLocation>
         {seller_location}, Bangladesh
       </h1>
       <p className="flex gap-3 items-center">
-        <CiDeliveryTruck className="text-2xl"></CiDeliveryTruck>
+        <CiDeliveryTruck className="text-4xl lg:text-2xl"></CiDeliveryTruck>
         <span>Currier : </span>
         {currier ? "Available" : "Unavailable"}
       </p>
@@ -38,7 +38,7 @@ const PriceCard = ({ book }) => {
       <p>Posted On : {post_time.slice(0, 10)}</p>
       <p>
         Product :
-        <span className="bg-red-600 rounded-lg px-2 text-white">
+        <span className="bg-red-600 rounded-lg px-2 text-white ml-3">
           {sold ? "Sold" : "Available"}
         </span>
       </p>

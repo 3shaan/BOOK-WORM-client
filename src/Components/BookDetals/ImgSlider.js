@@ -19,7 +19,7 @@ const ImgSlider = ({ book }) => {
     ];
     return (
       <div>
-        <div className='w-96 '>
+        <div className='lg:w-96 '>
           <ImageGallery cl items={img} />;
         </div>
       </div>

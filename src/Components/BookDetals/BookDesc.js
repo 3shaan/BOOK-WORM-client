@@ -10,7 +10,7 @@ export default function BookDesc({ book }) {
   return (
     <div className="w-full px-2 py-16 sm:px-0">
       <Tab.Group>
-        <Tab.List className="flex rounded-xl bg-blue-900/20 p-1 space-x-8 justify-around text-xl font-semibold">
+        <Tab.List className="flex rounded-xl bg-gray-200 p-1 space-x-8 justify-around lg:text-xl font-semibold">
           <Tab className="">Book OverView</Tab>
           <Tab>About author</Tab>
           <Tab>Review</Tab>

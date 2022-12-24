@@ -4,9 +4,9 @@ import { Link, Outlet } from 'react-router-dom';
 
 const AllProducts = () => {
     return (
-      <section className="w-10/12 mx-auto grid grid-cols-5">
-        <div>
-          <ul className="menu p-4 w-52  text-base-content">
+      <section className="w-10/12 mx-auto grid lg:grid-cols-5 gap-5">
+        <div className=''>
+          <ul className="menu p-4 w-52  text-base-content ">
             <li className="">
               <Link to={"/allproducts"}>All Books</Link>
             </li>

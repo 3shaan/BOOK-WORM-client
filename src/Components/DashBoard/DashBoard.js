@@ -36,42 +36,37 @@ const DashBoard = () => {
   return (
     <div>
       <Header></Header>
-      <label
+      {/* <label
         htmlFor="dashboard-drawer"
         className=" text-2xl drawer-button lg:hidden"
       >
         <BsList></BsList>
-      </label>
-      <div className="drawer drawer-mobile">
-        <input
-          id="dashboard-drawer"
-          type="checkbox"
-          className="drawer-toggle"
-        />
-        <div className="drawer-content flex flex-col ">
-          {/* <!-- Page content here --> */}
-          <Outlet></Outlet>
+      </label> */}
+      <div className="grid md:grid-cols-5 ">
+        <div className="col-span-4 order-2 overflow-scroll">
+          <div className="flex flex-col ">
+            {/* <!-- Page content here --> */}
+            <Outlet></Outlet>
+          </div>
         </div>
-        <div className="drawer-side">
-          <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <div className="h-full p-3 space-y-2 w-60 bg-gray-100 text-gray-900">
-            <div className="flex items-center p-2 space-x-4">
+        <div className="order-1 w-screen md:w-80">
+          {/* <label htmlFor="dashboard-drawer" className="drawer-overlay"></label> */}
+          <div className="h-full p-3 space-y-2  bg-gray-100 text-gray-900 flex md:flex-col justify-around md:justify-start">
+            <div className="flex  md:flex-row items-center p-2 space-x-4">
               <img
                 src="https://source.unsplash.com/100x100/?portrait"
                 alt=""
                 className="w-12 h-12 rounded-full dark:bg-gray-200"
               />
               <div>
-                <h2 className="text-lg font-semibold">{ users?.displayName}</h2>
+                <h2 className="text-lg font-semibold">{users?.displayName}</h2>
                 <span className="flex items-center space-x-1 hover:underline cursor-pointer">
-                  
-                    View profile
-                  
+                  View profile
                 </span>
               </div>
             </div>
             <div className="divide-y divide-gray-700">
-              <ul className="menu p-4 w-80  text-base-content">
+              <ul className="menu p-4 md:w-80  text-base-content">
                 {/* <!-- Sidebar content here --> */}
                 {userRole === "buyer" && (
                   <>

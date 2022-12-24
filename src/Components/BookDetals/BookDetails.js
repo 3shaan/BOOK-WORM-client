@@ -31,8 +31,8 @@ const BookDetails = () => {
     setOpen(true);
   }
     return (
-      <div className="w-10/12 mx-auto mt-10 bg-gray-100 p-5">
-        <div className="flex gap-10">
+      <div className="w-11/12 lg:w-10/12 mx-auto mt-10  p-5">
+        <div className="flex flex-col lg:flex-row gap-10">
           <ImgSlider book={book}></ImgSlider>
           <BooksInfo book={book} setOpen={openBuyModal}></BooksInfo>
           <PriceCard book={book}></PriceCard>
