@@ -54,43 +54,62 @@ const DashBoard = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80  text-base-content">
-            {/* <!-- Sidebar content here --> */}
-            {userRole === "buyer" && (
-              <>
-                <li>
-                  <Link to={"/dashboard/myorder"}>My Order</Link>
-                </li>
-                <li>
-                  <Link to={"/dashboard/wishlist"}>My WishList</Link>
-                </li>
-              </>
-            )}
-            {userRole === "seller" && (
-              <>
-                <li>
-                  <Link to={"/dashboard/addproduct"}>Add Product</Link>
-                </li>
-                <li>
-                  <Link to={"/dashboard/mybuyer"}>My Buyer</Link>
-                </li>
-                <li>
-                  <Link to={"/dashboard/myproduct"}>My Product</Link>
-                </li>
-              </>
-            )}
+          <div className="h-full p-3 space-y-2 w-60 bg-gray-100 text-gray-900">
+            <div className="flex items-center p-2 space-x-4">
+              <img
+                src="https://source.unsplash.com/100x100/?portrait"
+                alt=""
+                className="w-12 h-12 rounded-full dark:bg-gray-200"
+              />
+              <div>
+                <h2 className="text-lg font-semibold">{ users?.displayName}</h2>
+                <span className="flex items-center space-x-1 hover:underline cursor-pointer">
+                  
+                    View profile
+                  
+                </span>
+              </div>
+            </div>
+            <div className="divide-y divide-gray-700">
+              <ul className="menu p-4 w-80  text-base-content">
+                {/* <!-- Sidebar content here --> */}
+                {userRole === "buyer" && (
+                  <>
+                    <li>
+                      <Link to={"/dashboard/myorder"}>My Order</Link>
+                    </li>
+                    <li>
+                      <Link to={"/dashboard/wishlist"}>My WishList</Link>
+                    </li>
+                  </>
+                )}
+                {userRole === "seller" && (
+                  <>
+                    <li>
+                      <Link to={"/dashboard/addproduct"}>Add Product</Link>
+                    </li>
+                    <li>
+                      <Link to={"/dashboard/mybuyer"}>My Buyer</Link>
+                    </li>
+                    <li>
+                      <Link to={"/dashboard/myproduct"}>My Product</Link>
+                    </li>
+                  </>
+                )}
 
-            {userRole === "admin" && (
-              <>
-                <li>
-                  <Link to={"/dashboard/allbuyers"}>All Buyers</Link>
-                </li>
-                <li>
-                  <Link to={"/dashboard/allsellers"}>All Sellers</Link>
-                </li>
-              </>
-            )}
-          </ul>
+                {userRole === "admin" && (
+                  <>
+                    <li>
+                      <Link to={"/dashboard/allbuyers"}>All Buyers</Link>
+                    </li>
+                    <li>
+                      <Link to={"/dashboard/allsellers"}>All Sellers</Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -32,16 +32,16 @@ const Header = () => {
                 Home
               </Link>
             </li>
-            {/* <li>
-                <Link
-                  to={""}
-                  aria-label="Products"
-                  title="Products"
-                  className="tracking-wide text-gray-700 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
-                >
-                  All Products
-                </Link>
-              </li> */}
+            <li>
+              <Link
+                to={"/allproducts"}
+                aria-label="Products"
+                title="Products"
+                className="tracking-wide text-gray-700 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
+              >
+                All Products
+              </Link>
+            </li>
             <li>
               <Link
                 to={"/dashboard"}

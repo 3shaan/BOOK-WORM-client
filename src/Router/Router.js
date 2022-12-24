@@ -1,4 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
+import AllProducts from "../Components/AllProducts/AllProducts";
+import EveryProducts from "../Components/AllProducts/EveryProducts";
+import Fantasy from "../Components/AllProducts/Fantasy";
+import Romance from "../Components/AllProducts/Romance";
+import Thriller from "../Components/AllProducts/Thriller";
 import Blogs from "../Components/Blogs/Blogs";
 import BookDetails from "../Components/BookDetals/BookDetails";
 import Category from "../Components/Categories/Category";
@@ -35,6 +40,28 @@ export const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs></Blogs>,
+      },
+      {
+        path: "/allproducts",
+        element: <AllProducts></AllProducts>,
+        children: [
+          {
+            path: "/allproducts/fantasy",
+            element: <Fantasy></Fantasy>,
+          },
+          {
+            path: "/allproducts/thriller",
+            element: <Thriller></Thriller>,
+          },
+          {
+            path: "/allproducts/romance",
+            element: <Romance/>,
+          },
+          {
+            path: "/allproducts",
+            element: <EveryProducts/>,
+          },
+        ],
       },
       {
         path: "/category/:id",
@@ -182,4 +209,5 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {},
 ]);

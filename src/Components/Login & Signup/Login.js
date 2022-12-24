@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebook, FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { authContext } from "../../Context/Context";
@@ -8,11 +8,13 @@ import toast from "react-hot-toast";
 const Login = () => {
   const { login, googleLogIn } = useContext(authContext);
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     const email = event.target.email.value;
     const password = event.target.password.value;
 
@@ -28,14 +30,20 @@ const Login = () => {
               localStorage.setItem("token", data?.data?.token);
               toast.success("login successfully");
               navigate(from, { replace: true });
+              setLoading(false);
             })
             .catch((err) => {
               toast.error(err?.message);
               console.log(err);
+              setLoading(false);
             });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        toast.error('Please input valid login form or Signup')
+        setLoading(false);
+      });
 
     console.log(email, password);
   };
@@ -43,6 +51,7 @@ const Login = () => {
   // google log in
 
   const handleGoogle = () => {
+    setLoading(true);
     googleLogIn()
       .then((res) => {
         console.log(res);
@@ -64,6 +73,7 @@ const Login = () => {
               toast.success("Sign up successful");
               localStorage.setItem("token", data2?.data?.token);
               navigate("/", { replace: true });
+              setLoading(false)
               return;
             }
             axios
@@ -75,17 +85,25 @@ const Login = () => {
                   toast.success("Sign up successful");
                   localStorage.setItem("token", user?.data?.token);
                   navigate("/", { replace: true });
+                  setLoading(false);
                 }
                 console.log(user);
               })
               .catch((err) => {
                 console.log(err);
+                setLoading(false)
                 // setIsError(err.message);
               });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err)
+            setLoading(false);
+          });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        setLoading(false);
+      });
   };
 
   return (
@@ -142,7 +160,7 @@ const Login = () => {
                   type="text"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-red-600 focus:outline-none"
                   id="exampleFormControlInput2"
-                  placeholder="Email address"
+                  placeholder="Email address" required
                 />
               </div>
 
@@ -153,7 +171,7 @@ const Login = () => {
                   type="password"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-red-600 focus:outline-none"
                   id="exampleFormControlInput2"
-                  placeholder="Password"
+                  placeholder="Password" required
                 />
               </div>
 
@@ -181,7 +199,7 @@ const Login = () => {
                   type="submit"
                   className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32"
                 >
-                  Login
+                  {loading? "Logging...":"Login"}
                 </button>
                 <p className="text-sm font-semibold mt-2 pt-1 mb-0">
                   Don't have an account?

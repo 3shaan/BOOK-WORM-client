@@ -7,9 +7,7 @@ const CategoryCard = ({ Category }) => {
     <div className="mb-10">
       <Link to={`/category/${name}`}>
         <div
-          className={`card w-96 h-44  shadow-xl ${
-            color ? color : "bg-green-700"
-          } transform hover:-translate-y-1 duration-200 ease-in-out`}
+          className={`card w-96 h-44  shadow-xl bg-blue-500 transform hover:-translate-y-1 duration-200 ease-in-out`}
         >
           <div className="card-body">
             <img className="w-24 mx-auto" src={img} alt="" />

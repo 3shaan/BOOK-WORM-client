@@ -3,7 +3,6 @@ import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authContext } from "../../Context/Context";
-import { async } from "@firebase/util";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -14,6 +13,7 @@ const auth = getAuth(app);
 const SignUp = () => {
   const { emailSignIn, googleLogIn } = useContext(authContext);
   const [isError, setIsError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -23,13 +23,17 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    setLoading(true)
     emailSignIn(data?.email, data?.password)
       .then((result) => {
         updateProfile(auth.currentUser, {
           displayName: data?.name,
         })
           .then(() => {})
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+          });
 
         axios
           .post("https://book-worm-server.vercel.app/users", {
@@ -40,15 +44,20 @@ const SignUp = () => {
               toast.success("Sign up successful");
               localStorage.setItem("token", user?.data?.token);
               navigate("/", { replace: true });
+              setLoading(false);
             }
             console.log(user);
           })
           .catch((err) => {
             console.log(err);
             setIsError(err.message);
+            setLoading(false);
           });
       })
-      .catch((err) => setIsError(err.message));
+      .catch((err) => {
+        setIsError(err.message)
+        setLoading(false);
+      });
   };
 
   //google login
@@ -200,7 +209,7 @@ const SignUp = () => {
                 <input
                   type="Submit"
                   className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32"
-                  value={"Sign up"}
+                  value={loading? 'Signning up...':" Signup"}
                   readOnly
                 />
 
