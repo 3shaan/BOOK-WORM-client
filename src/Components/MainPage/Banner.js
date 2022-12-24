@@ -14,7 +14,7 @@ const Banner = () => {
   };
     return (
       <div>
-        <div className="hero min-h-[600px] bg-gray-50">
+        <div className="hero min-h-[600px] ">
           <div className="hero-content flex-col lg:flex-row-reverse gap-20">
             {/* <img
               src="https://cdn.pixabay.com/photo/2015/11/19/21/11/book-1052014_960_720.jpg"

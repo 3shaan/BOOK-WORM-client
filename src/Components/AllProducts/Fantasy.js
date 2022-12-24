@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import BooksCard from "../Categories/BooksCard";
 import Loading from "../Load & Error/Loading";
+import Error from '../Load & Error/Error';
 
 const Fantasy = () => {
      const {
@@ -21,7 +22,10 @@ const Fantasy = () => {
      console.log(Fantasy);
      if (isLoading) {
        return <Loading />;
-     }
+  }
+  if (isError) {
+    return <Error error={error}></Error>;
+  }
     return (
       <div>
         <h1 className="text-3xl text-center mb-10">All Fantasy Books</h1>

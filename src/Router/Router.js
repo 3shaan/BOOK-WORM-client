@@ -66,9 +66,9 @@ export const router = createBrowserRouter([
       {
         path: "/category/:id",
         element: (
-          <PrivateRoute>
+          
             <Category></Category>
-          </PrivateRoute>
+         
         ),
         loader: ({ params }) => {
           return fetch(
@@ -84,9 +84,9 @@ export const router = createBrowserRouter([
       {
         path: "/books/:id",
         element: (
-          <PrivateRoute>
+          
             <BookDetails></BookDetails>
-          </PrivateRoute>
+          
         ),
         loader: ({ params }) => {
           return fetch(

@@ -33,7 +33,7 @@ const Blogs = () => {
   };
   return (
     <div className="w-10/12 mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {blogs.map((blog) => {
           return (
             <div key={blog?._id} className="card w-96 bg-base-100 shadow-xl">

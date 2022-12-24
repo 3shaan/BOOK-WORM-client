@@ -4,7 +4,7 @@ const BestFeatures = () => {
     return (
       <div>
         <div className="relative bg-gray-200 p-4 mt-10">
-          <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-12 lg:items-center">
+          <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-12 lg:items-center  w-10/12 mx-auto">
             <div className="lg:col-start-2 md:pl-20">
               <h4 className="text-2xl leading-8 font-extrabold text-gray-900  tracking-tight sm:leading-9">
                 Manage everything
@@ -55,11 +55,12 @@ const BestFeatures = () => {
                     </div>
                     <div className="ml-4">
                       <h5 className="text-lg leading-6 text-gray-900  font-bold">
-                        Orders, managed
+                        Orders, managed, Sell, Add Products
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-500 ">
-                        All your orders in one place so you can manage your
-                        delivery, collection, asap and pre-orders in one place.
+                        All your orders/Products in one place so you can manage
+                        your delivery, collection, Your Products, Customer in
+                        one place.
                       </p>
                     </div>
                   </div>
@@ -82,11 +83,12 @@ const BestFeatures = () => {
                     </div>
                     <div className="ml-4">
                       <h5 className="text-lg leading-6 text-gray-900  font-bold">
-                        Email &amp; SMS Notifications
+                        Easy Online Payments
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-500 ">
-                        Never miss a new order with notifications via your
-                        dashboard, by sound, and to your email and phone.
+                        You can easily payment for buying products with stripe
+                        online payment method. Seller can will notify if their
+                        products is sold.
                       </p>
                     </div>
                   </div>

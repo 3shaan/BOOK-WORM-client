@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { authContext } from "../../Context/Context";
 import { useWrongToken } from "../Hooks/useWrongToken";
@@ -9,6 +10,7 @@ import Error from "../Load & Error/Error";
 const BooksInfo = ({ book, setOpen }) => {
   const { user } = useContext(authContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const wrongToken = useWrongToken(error);
   const {
@@ -27,6 +29,10 @@ const BooksInfo = ({ book, setOpen }) => {
   console.log(sold);
 
   const handleWishList = () => {
+     if (!user?.uid) {
+       toast.error("Please Login to Add Products in WishList");
+        return navigate("/login");
+     }
     const bookData = {
       buyerEmail: user?.email,
       buyerName: user?.displayName || "",
