@@ -3,10 +3,10 @@ import React from 'react';
 const BestFeatures = () => {
     return (
       <div>
-        <div className="relative bg-gray-200 p-4 mt-10">
+        <div className="relative bg-gray-200 dark:bg-[#24253b] p-4 mt-10">
           <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-12 lg:items-center  w-10/12 mx-auto">
             <div className="lg:col-start-2 md:pl-20">
-              <h4 className="text-2xl leading-8 font-extrabold text-gray-900  tracking-tight sm:leading-9">
+              <h4 className="text-2xl leading-8 font-extrabold text-gray-900 dark:text-gray-100  tracking-tight sm:leading-9">
                 Manage everything
               </h4>
               <ul className="mt-10">
@@ -27,10 +27,10 @@ const BestFeatures = () => {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h5 className="text-lg leading-6 text-gray-900  font-bold">
+                      <h5 className="text-lg leading-6 text-gray-700  dark:text-gray-100 font-bold">
                         One-look dashboard
                       </h5>
-                      <p className="mt-2 text-base leading-6 text-gray-500">
+                      <p className="mt-2 text-base leading-6 text-gray-500 dark:text-gray-300">
                         Know everything about your business in a single glance
                         with your new dashboard.
                       </p>
@@ -54,7 +54,7 @@ const BestFeatures = () => {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h5 className="text-lg leading-6 text-gray-900  font-bold">
+                      <h5 className="text-lg leading-6 text-gray-700    dark:text-gray-100 font-bold">
                         Orders, managed, Sell, Add Products
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-500 ">
@@ -82,7 +82,7 @@ const BestFeatures = () => {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <h5 className="text-lg leading-6 text-gray-900  font-bold">
+                      <h5 className="text-lg leading-6 text-gray-700    dark:text-gray-100 font-bold">
                         Easy Online Payments
                       </h5>
                       <p className="mt-2 text-base leading-6 text-gray-500 ">

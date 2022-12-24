@@ -119,13 +119,15 @@ const Login = () => {
           </div>
           <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
             <div className="flex flex-row items-center justify-center lg:justify-start space-x-1">
-              <p className="text-lg mb-0 mr-4">Sign in with</p>
+              <p className="text-lg mb-0 mr-4 text-gray-900 dark:text-gray-100">
+                Sign in with
+              </p>
               <button
                 onClick={handleGoogle}
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1 dark:hover:text-white"
               >
                 <FaGoogle className="text-lg"></FaGoogle>
               </button>
@@ -134,7 +136,7 @@ const Login = () => {
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1 dark:hover:text-white"
               >
                 <FaFacebookF className="text-lg"></FaFacebookF>
               </button>
@@ -143,14 +145,16 @@ const Login = () => {
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1 dark:hover:text-white"
               >
                 <FaGithub className="text-lg"></FaGithub>
               </button>
             </div>
 
             <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-              <p className="text-center font-semibold mx-4 mb-0">Or</p>
+              <p className="text-center font-semibold mx-4 mb-0 text-gray-800 dark:text-gray-100">
+                Or
+              </p>
             </div>
             <form onSubmit={handleSubmit}>
               {/* <!-- Email input --> */}
@@ -160,7 +164,8 @@ const Login = () => {
                   type="text"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-red-600 focus:outline-none"
                   id="exampleFormControlInput2"
-                  placeholder="Email address" required
+                  placeholder="Email address"
+                  required
                 />
               </div>
 
@@ -171,7 +176,8 @@ const Login = () => {
                   type="password"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-red-600 focus:outline-none"
                   id="exampleFormControlInput2"
-                  placeholder="Password" required
+                  placeholder="Password"
+                  required
                 />
               </div>
 
@@ -183,13 +189,13 @@ const Login = () => {
                     id="exampleCheck2"
                   />
                   <label
-                    className="form-check-label inline-block text-gray-800"
+                    className="form-check-label inline-block text-gray-800 dark:text-gray-100"
                     for="exampleCheck2"
                   >
                     Remember me
                   </label>
                 </div>
-                <a href="#!" className="text-gray-800">
+                <a href="#!" className="text-gray-800 dark:text-gray-100">
                   Forgot password?
                 </a>
               </div>
@@ -199,13 +205,13 @@ const Login = () => {
                   type="submit"
                   className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32"
                 >
-                  {loading? "Logging...":"Login"}
+                  {loading ? "Logging..." : "Login"}
                 </button>
-                <p className="text-sm font-semibold mt-2 pt-1 mb-0">
+                <p className="text-sm font-semibold mt-2 pt-1 mb-0 text-gray-800 dark:text-gray-100">
                   Don't have an account?
                   <Link
                     to={"/signup"}
-                    className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
+                    className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out ml-1 hover:underline"
                   >
                     Register
                   </Link>

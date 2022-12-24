@@ -90,14 +90,14 @@ const BooksInfo = ({ book, setOpen }) => {
             disabled={sold}
             htmlFor="my-modal-3"
             onClick={() => setOpen(true)}
-            className="btn-sm md:btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
+            className="btn-sm md:btn rounded-full bg-red-600 md:bg-red-600 border-red-700 md:border-red-700  hover:bg-transparent md:hover:bg-transparent hover:text-black md:hover:text-black hover:border-red-700 md:hover:border-red-700 duration-300 text-white md:text-white mt-2 w-48"
           >
             Buy Now
           </button>
           <button
             disabled={sold}
             onClick={handleWishList}
-            className="btn-sm md:btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white w-48 rounded-lg hover:rounded-full"
+            className="btn-sm md:btn rounded-full bg-red-600 md:bg-red-600 border-red-700 md:border-red-700  hover:bg-transparent md:hover:bg-transparent hover:text-black md:hover:text-black hover:border-red-700 md:hover:border-red-700 duration-300 text-white md:text-white mt-2 w-48"
           >
             Add to wishlist
           </button>

@@ -23,7 +23,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Context>
         <Elements stripe={stripePromise}>
-          <App />
+          <App className="bg-[#ecf0f3]"></App>
         </Elements>
         <Toaster />
       </Context>

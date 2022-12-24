@@ -31,7 +31,7 @@ const AdvertisedProducts = () => {
   return (
     advertised?.length > 0 && (
       <div className="w-10/12 mx-auto">
-        <h1 className="text-3xl text-center font-semibold text-gray-700 my-5">
+        <h1 className="text-3xl text-center font-semibold text-gray-700 dark:text-gray-100 my-5">
           Our HighLighted Product
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

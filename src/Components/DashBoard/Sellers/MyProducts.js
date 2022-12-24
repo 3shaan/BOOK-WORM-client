@@ -128,35 +128,52 @@ const MyProducts = () => {
   return (
     <div>
       <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-400 dark:bg-[#24253b]  dark:text-gray-400">
             <tr>
-              <th></th>
-              <th>Images</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Available/Sold</th>
-              <th>Advertise</th>
-              <th>Action</th>
+              <th scope="col" className="py-4 px-7"></th>
+              <th scope="col" className="py-4 px-7">
+                Images
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Product Name
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Price
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Category
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Available/Sold
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Advertise
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {myProducts.map((product, i) => {
               return (
-                <tr key={product?._id} className="hover">
-                  <th>{i + 1}</th>
-                  <td>
+                <tr
+                  key={product?._id}
+                  className="hover bg-gray-200 dark:bg-[#292A3D] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100"
+                >
+                  <th className="py-4 px-6">{i + 1}</th>
+                  <td className="py-4 px-6">
                     <div className="avatar">
                       <div className="w-24 rounded-full">
                         <img src={product?.images[0]} alt="book Img" />
                       </div>
                     </div>
                   </td>
-                  <td>{product?.title}</td>
-                  <td>{product?.genre}</td>
-                  <td>{product?.price} TK</td>
-                  <td>
+                  <td className="py-4 px-6">{product?.title}</td>
+                  <td className="py-4 px-6">{product?.genre}</td>
+                  <td className="py-4 px-6">{product?.price} TK</td>
+                  <td className="py-4 px-6">
                     {product?.sold ? (
                       <span className="text-xl text-red-600 font-semibold">
                         Sold
@@ -167,7 +184,7 @@ const MyProducts = () => {
                       </span>
                     )}
                   </td>
-                  <td>
+                  <td className="py-4 px-6">
                     {product?.sold ? (
                       <span className="text-xl text-red-600 font-semibold">
                         Sold
@@ -181,7 +198,7 @@ const MyProducts = () => {
                       </button>
                     )}
                   </td>
-                  <td>
+                  <td className="py-4 px-6">
                     <button
                       onClick={() => handleDelete(product?._id)}
                       className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12"
@@ -189,7 +206,7 @@ const MyProducts = () => {
                       <MdDeleteForever className="text-2xl"></MdDeleteForever>
                     </button>
                   </td>
-                  <td> </td>
+                  
                 </tr>
               );
             })}

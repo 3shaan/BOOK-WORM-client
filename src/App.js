@@ -8,6 +8,9 @@ function App() {
   //    themeChange(false);
   // },[])
   
+  useEffect(() => {
+    document.documentElement.classList.add("light");
+  },[])
   return <RouterProvider router={router}></RouterProvider>;
 }
 

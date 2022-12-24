@@ -7,6 +7,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { getAuth, updateProfile } from "firebase/auth";
 import app from "../../FireBase/FireBase.config";
+import signupani from '../../images/signupani.json'
+import Lottie from "react-lottie";
 
 const auth = getAuth(app);
 
@@ -106,26 +108,37 @@ const SignUp = () => {
       })
       .catch((err) => console.log(err));
   };
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: signupani,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
   return (
     <section>
       <div className="px-6 h-full text-gray-800">
         <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
-            <img
-              src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7875.jpg?w=740&t=st=1669293819~exp=1669294419~hmac=116af89a02024d774db61291614d837e3467304593ec7f8b42b6cebcf82ece88"
-              className="lg:w-9/12 lg:ml-10"
+            {/* <img
+              src={signupimg}
+              className="lg:w-9/12 lg:ml-10 rounded-lg"
               alt="login"
-            />
+            /> */}
+            <Lottie options={defaultOptions}></Lottie>
           </div>
           <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
             <div className="flex flex-row items-center justify-center lg:justify-start space-x-1">
-              <p className="text-lg mb-0 mr-4">Sign up with</p>
+              <p className="text-lg mb-0 mr-4 text-gray-800 dark:text-gray-100">
+                Sign up with
+              </p>
               <button
                 onClick={handleGoogle}
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1 dark:hover:text-white"
               >
                 <FaGoogle className="text-lg"></FaGoogle>
               </button>
@@ -134,7 +147,7 @@ const SignUp = () => {
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className=" btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+                className=" btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1 dark:hover:text-white"
               >
                 <FaFacebookF className="text-lg"></FaFacebookF>
               </button>
@@ -143,7 +156,7 @@ const SignUp = () => {
                 type="button"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="light"
-                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1"
+                className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-full hover:border-red-700  hover:-translate-y-1 dark:hover:text-white"
               >
                 <FaGithub className="text-lg"></FaGithub>
               </button>
@@ -194,7 +207,9 @@ const SignUp = () => {
               </div>
 
               <div className="flex gap-5 items-center mb-6">
-                <p className="text-lg font-semibold">What are you?</p>
+                <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                  What are you?
+                </p>
                 <select
                   {...register("role", { required: true })}
                   className="select select-bordered w-full max-w-xs"
@@ -208,16 +223,16 @@ const SignUp = () => {
               <div className="text-center lg:text-left">
                 <input
                   type="Submit"
-                  className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32"
-                  value={loading? 'Signning up...':" Signup"}
+                  className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32 dark:hover:text-white"
+                  value={loading ? "Signning up..." : " Signup"}
                   readOnly
                 />
 
-                <p className="text-sm font-semibold mt-2 pt-1 mb-0">
+                <p className="text-sm font-semibold mt-2 pt-1 mb-0 text-gray-800 dark:text-gray-100">
                   Already have an account?
                   <Link
                     to={"/login"}
-                    className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
+                    className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out ml-1 hover:underline"
                   >
                     Login
                   </Link>

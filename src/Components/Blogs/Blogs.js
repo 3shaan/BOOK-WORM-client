@@ -36,7 +36,10 @@ const Blogs = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {blogs.map((blog) => {
           return (
-            <div key={blog?._id} className="card w-96 bg-base-100 shadow-xl">
+            <div
+              key={blog?._id}
+              className="card w-96 bg-gray-200 dark:bg-[#24253b] text-gray-900 dark:text-gray-100 shadow-xl"
+            >
               <figure>
                 <img src={blog?.img} alt="pics" />
               </figure>

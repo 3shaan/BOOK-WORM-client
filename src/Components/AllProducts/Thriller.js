@@ -14,7 +14,9 @@ const Thriller = () => {
   } = useQuery({
     queryKey: ["allProducts"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/category/Thriller");
+      const res = await axios.get(
+        "https://book-worm-server.vercel.app/category/Thriller"
+      );
       // console.log(res)
       return res?.data;
     },

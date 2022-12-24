@@ -101,8 +101,8 @@ const AddProducts = () => {
     // console.log(uploadData);
   };
   return (
-    <div>
-      <h1 className="text-2xl font-semibold text-center mt-5 mb-10">
+    <div className="lg:px-10">
+      <h1 className="text-2xl font-semibold text-center mt-5 mb-10 text-gray-900 dark:text-gray-100">
         Add a Product
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -110,10 +110,10 @@ const AddProducts = () => {
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
                   Product Information
                 </h3>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                   Here give all the details about your Product. <br /> Every
                   field must be Required.
                 </p>
@@ -252,10 +252,10 @@ const AddProducts = () => {
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <div className="px-4 sm:px-0">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100">
                   Personal Information
                 </h3>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                   Please insert your legal contact information so that seller
                   can contact you.
                 </p>
@@ -263,12 +263,12 @@ const AddProducts = () => {
             </div>
             <div className="mt-5 md:col-span-2 md:mt-0">
               <div className="overflow-hidden shadow sm:rounded-md">
-                <div className="bg-white px-4 py-5 sm:p-6">
+                <div className=" px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="first-name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-100"
                       >
                         Full Name
                       </label>
@@ -285,7 +285,7 @@ const AddProducts = () => {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="last-name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-100"
                       >
                         Phone Number
                       </label>
@@ -301,7 +301,7 @@ const AddProducts = () => {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="email-address"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-100"
                       >
                         Email address
                       </label>
@@ -319,7 +319,7 @@ const AddProducts = () => {
                     <div className="col-span-6 sm:col-span-">
                       <label
                         htmlFor="email-address"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-100"
                       >
                         Location
                       </label>
@@ -333,7 +333,7 @@ const AddProducts = () => {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <div className=" px-4 py-3 text-right sm:px-6">
                   <button
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

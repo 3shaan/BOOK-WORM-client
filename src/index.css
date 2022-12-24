@@ -8,6 +8,14 @@
     font-family: 'Poppins', sans-serif;
 }
 @import "react-image-gallery/styles/css/image-gallery.css";
-body{
-    background-color: #ecf0f3;
+
+:root {
+  --my-color: #ecf0f3;
+  /* or any other variables/style */
+}
+.light{
+    background-color: var(--my-color);
+}
+.dark{
+  background-color: #292A3D;
 }

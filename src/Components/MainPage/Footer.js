@@ -2,25 +2,47 @@ import React from 'react';
 
 const Footer = () => {
     return (
-      <div className='mt-10'>
-        <footer className="footer p-10 bg-base-300 text-base-content">
+      <div className="mt-10">
+        <footer className="footer p-10 bg-gray-200 dark:bg-[#24253b] text-base-content grid-cols-2 lg:grid-cols-3">
           <div>
-            <span className="footer-title">Services</span>
-            <a className="link link-hover">Branding</a>
-            <a className="link link-hover">Design</a>
-            <a className="link link-hover">Marketing</a>
-            <a className="link link-hover">Advertisement</a>
+            <span className="footer-title text-gray-900 dark:text-gray-100">
+              Services
+            </span>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              Buyer
+            </a>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              Seller
+            </a>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              Sell Policy
+            </a>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              Rules & Regulations
+            </a>
           </div>
           <div>
-            <span className="footer-title">Company</span>
-            <a className="link link-hover">About us</a>
-            <a className="link link-hover">Contact</a>
-            <a className="link link-hover">Jobs</a>
-            <a className="link link-hover">Press kit</a>
+            <span className="footer-title text-gray-900 dark:text-white">
+              Company
+            </span>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              About us
+            </a>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              Contact
+            </a>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              Helps
+            </a>
+            <a className="link link-hover text-gray-600 dark:text-white">
+              Privacy & policy
+            </a>
           </div>
-          <div>
-            <span className="footer-title">Social</span>
-            <div className="grid grid-flow-col gap-4">
+          <div className="">
+            <span className="footer-title text-gray-900 dark:text-gray-100">
+              Social
+            </span>
+            <div className="grid grid-flow-col gap-4 text-gray-900 dark:text-gray-200">
               <a>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

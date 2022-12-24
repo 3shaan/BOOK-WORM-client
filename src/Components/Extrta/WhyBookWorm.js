@@ -6,11 +6,11 @@ import price from '../../images/price.svg'
 
 const WhyBookWorm = () => {
     return (
-      <div className=" space-y-10 bg-gray-200 p-3 rounded-md py-10">
-        <h1 className="text-3xl text-gray-700 text-center font-semibold my-4">
+      <div className=" space-y-10 bg-gray-200 dark:bg-[#24253b] p-3 rounded-md py-10">
+        <h1 className="text-3xl text-gray-700 dark:text-gray-100 text-center font-semibold my-4">
           Why Buy & Sell Books With BookWorm?
         </h1>
-        <div className="flex gap-5 flex-col lg:justify-between w-10/12 mx-auto">
+        <div className="flex gap-5 flex-col md:flex-row lg:justify-between w-10/12 mx-auto text-gray-600 dark:text-gray-100">
           {/* <div className='flex gap-3'>
                     <img className='w-12' src={category} alt="" />
                     <p>Choose you Products with Category wise</p>
