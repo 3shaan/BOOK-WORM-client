@@ -74,7 +74,7 @@ const BooksInfo = ({ book, setOpen }) => {
   };
   return (
     <div>
-      <div className="space-y-3 text-lg">
+      <div className="space-y-3 text-lg text-gray-800 dark:text-gray-100">
         <h1 className="text-2xl font-semi-bold">
           <span className="font-bold text-lg md:text-3xl">Book Name :</span>{" "}
           {title}

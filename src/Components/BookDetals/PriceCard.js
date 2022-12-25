@@ -15,7 +15,7 @@ const PriceCard = ({ book }) => {
   } = book;
 
   return (
-    <div className="bg-slate-200 px-5 py-3 rounded-lg lg:w-80 lg:text-lg space-y-4 font-semibold h-96 ">
+    <div className="bg-slate-200 dark:bg-[#24253b] text-gray-800 dark:text-gray-100 px-5 py-3 rounded-lg lg:w-80 lg:text-lg space-y-4 font-semibold h-96 ">
       <h1 className="text-2xl text-center my-2">Seller Information </h1>
       <hr className="border-black mb-7" />
       <div className="flex gap-3 items-center">

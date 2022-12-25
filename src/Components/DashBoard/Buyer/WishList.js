@@ -76,26 +76,34 @@ const WishList = () => {
   };
   return (
     <div>
-      <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
+      <div className="overflow-x-auto ">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-400 dark:bg-[#24253b]  dark:text-gray-400">
             <tr>
               <th></th>
-              <th>Product Name</th>
-              <th>Category </th>
-              <th>Price</th>
-              <th>Action</th>
+              <th scope="col" className="py-4 px-7">
+                Product Name
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Category{" "}
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Price
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {wishListData.map((wish, i) => {
               return (
-                <tr className="hover">
+                <tr className=" bg-gray-200 dark:bg-[#292A3D] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100">
                   <th>{i + 1}</th>
-                  <td>{wish?.productName}</td>
-                  <td>{wish?.category}</td>
-                  <td>{wish?.ProductPrice} TK</td>
-                  <td>
+                  <td className="py-8 px-6">{wish?.productName}</td>
+                  <td className="py-8 px-6">{wish?.category}</td>
+                  <td className="py-8 px-6">{wish?.ProductPrice} TK</td>
+                  <td className="py-8 px-6">
                     <div className="flex gap-3">
                       <Link to={`/dashboard/wishlist/payment/${wish?._id}`}>
                         <button className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12">

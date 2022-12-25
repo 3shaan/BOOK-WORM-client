@@ -8,9 +8,9 @@ function classNames(...classes) {
 export default function BookDesc({ book }) {
     const { desc, author } = book;
   return (
-    <div className="w-full px-2 py-16 sm:px-0">
+    <div className="w-full px-2 py-16 sm:px-0 text-gray-800 dark:text-gray-100">
       <Tab.Group>
-        <Tab.List className="flex rounded-xl bg-gray-200 p-1 space-x-8 justify-around lg:text-xl font-semibold">
+        <Tab.List className="flex rounded-xl bg-gray-200 dark:bg-[#24253b] p-1 space-x-8 justify-around lg:text-xl font-semibold">
           <Tab className="">Book OverView</Tab>
           <Tab>About author</Tab>
           <Tab>Review</Tab>

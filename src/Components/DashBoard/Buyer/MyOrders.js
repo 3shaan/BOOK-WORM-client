@@ -80,31 +80,42 @@ const MyOrders = () => {
   return (
     <div>
       <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-400 dark:bg-[#24253b]  dark:text-gray-400">
             <tr>
               <th></th>
-              <th>Images</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Action</th>
+              <th scope="col" className="py-4 px-7">
+                Images
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Product Name
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Price
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => {
               return (
-                <tr key={product?._id} className="hover">
+                <tr
+                  key={product?._id}
+                  className="hover bg-gray-200 dark:bg-[#292A3D] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100"
+                >
                   <th>1</th>
-                  <td>
+                  <td className="py-8 px-6">
                     <div className="avatar">
                       <div className="w-24 rounded-full">
                         <img src={product?.ProductImg} alt="book Img" />
                       </div>
                     </div>
                   </td>
-                  <td>{product?.productName}</td>
-                  <td>{product?.ProductPrice} TK</td>
-                  <td>
+                  <td className="py-8 px-6">{product?.productName}</td>
+                  <td className="py-8 px-6">{product?.ProductPrice} TK</td>
+                  <td className="py-8 px-6">
                     <div className="flex gap-3">
                       {product?.payment ? (
                         <button className="btn btn-sm bg-blue-600 hover:bg-transparent text-white hover:text-black border-blue-600 hover:border-blue-600 h-12 text-xs ">
@@ -127,7 +138,7 @@ const MyOrders = () => {
                       </button>
                     </div>
                   </td>
-                  <td> </td>
+                  
                 </tr>
               );
             })}
