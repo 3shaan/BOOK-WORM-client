@@ -242,6 +242,7 @@ const Header = () => {
                       <li>
                         <Link
                           to={"/"}
+                          onClick={() => setIsMenuOpen(false)}
                           aria-label="Home"
                           title="Home"
                           className="tracking-wide text-gray-700 dark:text-gray-100 transition  text-xl hover:underline font-bold decoration-red-700 duration-500 "
@@ -251,7 +252,8 @@ const Header = () => {
                       </li>
                       <li>
                         <Link
-                          to={""}
+                          to={"/allproducts"}
+                          onClick={() => setIsMenuOpen(false)}
                           aria-label="Products"
                           title="Products"
                           className="tracking-wide text-gray-700 dark:text-gray-100 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
@@ -262,6 +264,7 @@ const Header = () => {
                       <li>
                         <Link
                           to={"/dashboard"}
+                          onClick={() => setIsMenuOpen(false)}
                           aria-label="Dashboard"
                           title="Dashboard"
                           className="tracking-wide text-gray-700 dark:text-gray-100 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
@@ -272,6 +275,7 @@ const Header = () => {
                       <li>
                         <Link
                           to={"/blogs"}
+                          onClick={() => setIsMenuOpen(false)}
                           aria-label="Blogs"
                           title="Blogs"
                           className="tracking-wide text-gray-700 dark:text-gray-100 transition-colors hover:text-deep-purple-accent-400 text-xl hover:underline font-bold decoration-red-700 duration-500"
@@ -280,14 +284,47 @@ const Header = () => {
                         </Link>
                       </li>
                       <li>
-                        <a
-                          href="/"
-                          className="btn bg-red-600 border-red-700  hover:bg-transparent hover:text-black hover:border-red-700 duration-300 text-white dark:hover:text-white w-full"
-                          aria-label="Sign up"
-                          title="Sign up"
-                        >
-                          Sign up
-                        </a>
+                        <ul className=" ">
+                          {user?.uid ? (
+                            <>
+                              <li>
+                                <button
+                                  onClick={logOut}
+                                  className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-32 dark:hover:text-white"
+                                  aria-label=" Logout"
+                                  title=" Logout"
+                                >
+                                  Log out
+                                </button>
+                              </li>
+                            </>
+                          ) : (
+                            <li className="flex justify-around">
+                              <li>
+                                <Link
+                                  to="/login"
+                                  onClick={() => setIsMenuOpen(false)}
+                                  className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-28 dark:hover:text-white"
+                                  aria-label=" Login"
+                                  title=" Login"
+                                >
+                                  Login
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to="/signup"
+                                  onClick={() => setIsMenuOpen(false)}
+                                  className="btn bg-red-600 hover:bg-transparent text-white hover:text-black border-red-700 rounded-lg hover:border-red-700 w-28 dark:hover:text-white"
+                                  aria-label="Sign up"
+                                  title="Sign up"
+                                >
+                                  Sign up
+                                </Link>
+                              </li>
+                            </li>
+                          )}
+                        </ul>
                       </li>
                     </ul>
                   </nav>

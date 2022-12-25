@@ -104,26 +104,37 @@ const AllSellers = () => {
   };
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-center my-5">All Buyers</h1>
+      <h1 className="text-2xl font-semibold text-center my-5 text-gray-800 dark:text-gray-100">All Seller</h1>
       <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-400 dark:bg-[#24253b]  dark:text-gray-400">
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Verified</th>
-              <th>action</th>
+              <th scope="col" className="py-4 px-7"></th>
+              <th scope="col" className="py-4 px-7">
+                Name
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Email
+              </th>
+              <th scope="col" className="py-4 px-7">
+                Verified
+              </th>
+              <th scope="col" className="py-4 px-7">
+                action
+              </th>
             </tr>
           </thead>
           <tbody>
             {sellers.map((seller, i) => {
               return (
-                <tr key={seller?._id} className="hover">
-                  <th>{i + 1}</th>
-                  <td>{seller?.name}</td>
-                  <td>{seller?.email}</td>
-                  <td>
+                <tr
+                  key={seller?._id}
+                  className="hover bg-gray-200 dark:bg-[#292A3D] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100"
+                >
+                  <th className="py-8 px-6">{i + 1}</th>
+                  <td className="py-8 px-6">{seller?.name}</td>
+                  <td className="py-8 px-6">{seller?.email}</td>
+                  <td className="py-8 px-6">
                     {seller?.user_verified ? (
                       <div>
                         <MdVerified className="text-blue-700 text-3xl"></MdVerified>
@@ -137,7 +148,7 @@ const AllSellers = () => {
                       </button>
                     )}
                   </td>
-                  <td>
+                  <td className="py-8 px-6">
                     <button
                       onClick={() => handleDelete(seller?._id)}
                       className="btn btn-sm bg-red-600 hover:bg-transparent text-white hover:text-black border-red-600 hover:border-red-600 h-12"
