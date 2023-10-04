@@ -34,30 +34,18 @@ If you want to see Live site then click this link,
 - https://github.com/3shaan/BOOK_WORM-Server
 
 
-## Installation
-
-Install my project with github
-
-```bash
-  git clone https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-3shaan
-  cd programming-hero-web-course-4/b612-used-products-resale-clients-side-3shaan
-  npm install
-```
-And Enjoy.
-
-
 ## Run Locally
 
 Clone the project
 
 ```bash
-   git clone https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-3shaan
+   git clone https://github.com/3shaan/BOOK-WORM-client.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd programming-hero-web-course-4/b612-used-products-resale-clients-side-3shaan
+  cd BOOK-WORM-client
 ```
 
 Install dependencies
